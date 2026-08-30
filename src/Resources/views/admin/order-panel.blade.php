@@ -57,19 +57,10 @@
             >
                 @csrf
 
-                <select
-                    name="territory_base_id"
-                    required
-                    class="max-w-[300px] rounded-md border px-2 py-1.5 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
-                >
-                    <option value="">@lang('sendifico::app.admin.panel.territory-placeholder')</option>
-
-                    @foreach ($sendificoTerritories->all() as $territory)
-                        <option value="{{ $territory->territory_base_id }}">
-                            {{ $territory->searchable_text }}
-                        </option>
-                    @endforeach
-                </select>
+                <v-sendifico-territory-select
+                    :territories='@json($sendificoTerritories->all()->map(fn ($territory) => ['id' => $territory->territory_base_id, 'text' => $territory->searchable_text])->values())'
+                    placeholder="@lang('sendifico::app.admin.panel.territory-placeholder')"
+                ></v-sendifico-territory-select>
 
                 <button type="submit" class="secondary-button">
                     @lang('sendifico::app.admin.panel.confirm-territory')
@@ -258,3 +249,101 @@
         @endif
     </div>
 @endif
+
+@pushOnce('scripts')
+    <script
+        type="text/x-template"
+        id="v-sendifico-territory-select-template"
+    >
+        <div class="relative w-[300px] max-w-full">
+            <input
+                type="text"
+                v-model="search"
+                required
+                autocomplete="off"
+                :placeholder="placeholder"
+                class="w-full rounded-md border px-2 py-1.5 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                @focus="open = true"
+                @input="open = true; selectedId = ''"
+                @keydown.down.prevent="highlighted = Math.min(highlighted + 1, filtered.length - 1)"
+                @keydown.up.prevent="highlighted = Math.max(highlighted - 1, 0)"
+                @keydown.enter.prevent="filtered[highlighted] && select(filtered[highlighted])"
+                @keydown.esc="open = false"
+                @blur="open = false"
+            />
+
+            <input
+                type="hidden"
+                name="territory_base_id"
+                :value="selectedId"
+            />
+
+            <ul
+                v-if="open && filtered.length"
+                class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-white text-sm shadow-lg dark:border-gray-800 dark:bg-gray-900"
+            >
+                <li
+                    v-for="(territory, index) in filtered"
+                    :key="territory.id"
+                    :class="['cursor-pointer px-2 py-1.5 dark:text-gray-300', index === highlighted ? 'bg-blue-100 dark:bg-gray-800' : '']"
+                    @mousedown.prevent="select(territory)"
+                    @mouseover="highlighted = index"
+                >
+                    @{{ territory.text }}
+                </li>
+            </ul>
+        </div>
+    </script>
+
+    <script type="module">
+        app.component('v-sendifico-territory-select', {
+            template: '#v-sendifico-territory-select-template',
+
+            props: ['territories', 'placeholder'],
+
+            data() {
+                return {
+                    search: '',
+                    selectedId: '',
+                    open: false,
+                    highlighted: 0,
+                };
+            },
+
+            computed: {
+                filtered() {
+                    const normalize = (value) => value
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .toLowerCase();
+
+                    const terms = normalize(this.search).split(/\s+/).filter(Boolean);
+
+                    return this.territories
+                        .filter((territory) => {
+                            const text = normalize(territory.text);
+
+                            return terms.every((term) => text.includes(term));
+                        })
+                        .slice(0, 50);
+                },
+            },
+
+            watch: {
+                filtered() {
+                    this.highlighted = 0;
+                },
+            },
+
+            methods: {
+                select(territory) {
+                    this.selectedId = territory.id;
+
+                    this.search = territory.text;
+
+                    this.open = false;
+                },
+            },
+        });
+    </script>
+@endPushOnce
