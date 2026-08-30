@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Cache;
+use Tapstar\Sendifico\Http\Requests\EcuadorCartAddressRequest;
 use Tapstar\Sendifico\Repositories\TerritoryRepository;
 
 beforeEach(function () {
@@ -48,4 +49,21 @@ it('lists provinces and their cantons in alphabetical order', function () {
     expect(array_keys($tree))->toBe(['AZUAY', 'PICHINCHA']);
 
     expect($tree['PICHINCHA'])->toBe(['QUITO', 'RUMINAHUI']);
+});
+
+it('accepts an address without a postal code, and pins the country to Ecuador', function () {
+    // Arrange
+    $request = new EcuadorCartAddressRequest([
+        'billing' => ['country' => 'EC', 'use_for_shipping' => true],
+    ]);
+
+    // Act
+    $rules = $request->rules();
+
+    // Assert
+    expect($rules['billing.postcode'][0])->toBe('nullable');
+
+    expect($rules['billing.country'])->toBe(['required', 'in:EC']);
+
+    expect($rules['billing.vat_id'][0])->toBe('required');
 });
