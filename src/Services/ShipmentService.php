@@ -117,8 +117,11 @@ class ShipmentService
      * Push the order's current address and territory onto the Sendifico draft.
      *
      * With no remote draft yet this is simply a fresh draft attempt, which
-     * reads the corrected data on its own. A paid or terminal shipment can no
-     * longer be corrected: the carrier already has it.
+     * reads the corrected data on its own. A draft that was already quoted is
+     * re-quoted with its stored parcel, because rates depend on the
+     * destination; without a parcel the stale rates are cleared instead. A
+     * paid or terminal shipment can no longer be corrected: the carrier
+     * already has it.
      *
      * @param  \Webkul\Sales\Contracts\Order  $order
      * @return OperationResult
@@ -167,6 +170,26 @@ class ShipmentService
             'territory_base_id' => $territoryBaseId,
             'last_error' => null,
         ]);
+
+        $row->refresh();
+
+        $parcel = $row->parcel ?: [];
+
+        if (isset($parcel['weight'], $parcel['length'], $parcel['width'], $parcel['height'])) {
+            $requote = $this->completeParcel(
+                $row,
+                (float) $parcel['weight'],
+                (float) $parcel['length'],
+                (float) $parcel['width'],
+                (float) $parcel['height']
+            );
+
+            return $requote->success
+                ? OperationResult::success(trans('sendifico::app.result.recipient-requoted'))
+                : $requote;
+        }
+
+        $this->shipmentRepository->update(['rates' => null], $row->id);
 
         return OperationResult::success(trans('sendifico::app.result.recipient-updated'));
     }
