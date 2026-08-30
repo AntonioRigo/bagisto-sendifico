@@ -4,6 +4,12 @@ return [
     'acl' => [
         'sendifico' => 'Sendifico 货运',
     ],
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => '请输入有效的 cédula（10 位）或 RUC（13 位）。',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

@@ -5,6 +5,12 @@ return [
         'sendifico' => 'Envíos Sendifico',
     ],
 
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => 'Ingresa una cédula (10 dígitos) o un RUC (13 dígitos) válido.',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

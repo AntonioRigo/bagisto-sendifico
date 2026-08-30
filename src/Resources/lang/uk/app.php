@@ -4,6 +4,12 @@ return [
     'acl' => [
         'sendifico' => 'Відправлення Sendifico',
     ],
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => 'Введіть дійсну cédula (10 цифр) або RUC (13 цифр).',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

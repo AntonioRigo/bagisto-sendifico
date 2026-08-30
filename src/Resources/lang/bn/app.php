@@ -4,6 +4,12 @@ return [
     'acl' => [
         'sendifico' => 'Sendifico শিপমেন্ট',
     ],
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => 'বৈধ cédula (১০ সংখ্যা) বা RUC (১৩ সংখ্যা) লিখুন।',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

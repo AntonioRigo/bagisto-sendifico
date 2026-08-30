@@ -4,6 +4,12 @@ return [
     'acl' => [
         'sendifico' => 'Expedieri Sendifico',
     ],
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => 'Introduceți o cédula (10 cifre) sau un RUC (13 cifre) valid.',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

@@ -4,6 +4,12 @@ return [
     'acl' => [
         'sendifico' => 'Sendifico配送',
     ],
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => '有効な cédula（10桁）または RUC（13桁）を入力してください。',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

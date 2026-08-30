@@ -4,6 +4,12 @@ return [
     'acl' => [
         'sendifico' => 'مرسولات Sendifico',
     ],
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => 'یک cédula معتبر (۱۰ رقم) یا RUC (۱۳ رقم) وارد کنید.',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

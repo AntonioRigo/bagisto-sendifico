@@ -17,6 +17,11 @@ class SendificoServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->registerConfig();
+
+        $this->app->bind(
+            \Webkul\Shop\Http\Requests\CartAddressRequest::class,
+            \Tapstar\Sendifico\Http\Requests\EcuadorCartAddressRequest::class
+        );
     }
 
     /**
@@ -31,6 +36,8 @@ class SendificoServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'sendifico');
 
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'sendifico');
+
+        $this->app['view']->prependNamespace('shop', __DIR__.'/../Resources/views/shop');
 
         Event::listen('bagisto.admin.sales.order.left_component.after', static function ($viewRenderEventManager) {
             $viewRenderEventManager->addTemplate('sendifico::admin.order-panel');

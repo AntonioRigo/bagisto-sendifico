@@ -4,6 +4,12 @@ return [
     'acl' => [
         'sendifico' => 'Sendifico gönderileri',
     ],
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => 'Geçerli bir cédula (10 hane) veya RUC (13 hane) girin.',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

@@ -4,6 +4,12 @@ return [
     'acl' => [
         'sendifico' => 'Sendifico-zendingen',
     ],
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => 'Voer een geldige cédula (10 cijfers) of RUC (13 cijfers) in.',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

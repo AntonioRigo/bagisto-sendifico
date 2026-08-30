@@ -4,6 +4,12 @@ return [
     'acl' => [
         'sendifico' => 'Sendifico බෙදාහැරීම්',
     ],
+    'shop' => [
+        'vat-id' => 'Cédula o RUC',
+        'vat-id-placeholder' => '1712345678001',
+        'invalid-vat-id' => 'වලංගු cédula (ඉලක්කම් 10) හෝ RUC (ඉලක්කම් 13) ඇතුළත් කරන්න.',
+    ],
+
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',
