@@ -114,6 +114,64 @@ class ShipmentService
     }
 
     /**
+     * Push the order's current address and territory onto the Sendifico draft.
+     *
+     * With no remote draft yet this is simply a fresh draft attempt, which
+     * reads the corrected data on its own. A paid or terminal shipment can no
+     * longer be corrected: the carrier already has it.
+     *
+     * @param  \Webkul\Sales\Contracts\Order  $order
+     * @return OperationResult
+     */
+    public function syncRecipient($order)
+    {
+        $row = $this->shipmentRepository->findOneWhere(['order_id' => $order->id]);
+
+        if (! $row?->shipment_id) {
+            return $this->createDraft($order);
+        }
+
+        if ($row->is_paid || $row->is_terminal) {
+            return OperationResult::failure(trans('sendifico::app.result.recipient-locked'));
+        }
+
+        $address = $order->shipping_address ?: $order->billing_address;
+
+        $territoryBaseId = $this->territoryService->resolve($address->state, $address->city);
+
+        if (! $territoryBaseId) {
+            $this->upsertRow($order->id, $row, ['status' => ShipmentStatus::TERRITORY_PENDING]);
+
+            return OperationResult::needsTerritory(trans('sendifico::app.result.territory-pending'));
+        }
+
+        try {
+            $response = $this->client->editShipment((int) $row->shipment_id, [
+                'recipientAddress' => PayloadBuilder::recipient($order, $territoryBaseId),
+            ], $order->id);
+        } catch (\Exception $e) {
+            report($e);
+
+            return OperationResult::failure(trans('sendifico::app.result.transport-error'));
+        }
+
+        if ($response->failed()) {
+            $message = ErrorCatalog::message($response);
+
+            $this->upsertRow($order->id, $row, ['last_error' => $message]);
+
+            return OperationResult::failure($message);
+        }
+
+        $this->upsertRow($order->id, $row, [
+            'territory_base_id' => $territoryBaseId,
+            'last_error' => null,
+        ]);
+
+        return OperationResult::success(trans('sendifico::app.result.recipient-updated'));
+    }
+
+    /**
      * Store the packed parcel's real measurements and quote the draft.
      *
      * @param  Shipment  $row

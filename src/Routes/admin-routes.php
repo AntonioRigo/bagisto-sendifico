@@ -11,6 +11,8 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_ur
 
             Route::post('territory', 'confirmTerritory')->name('admin.sendifico.territory');
 
+            Route::post('address', 'updateAddress')->name('admin.sendifico.address');
+
             Route::post('parcel', 'parcel')->name('admin.sendifico.parcel');
 
             Route::post('purchase', 'purchase')->name('admin.sendifico.purchase');

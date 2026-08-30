@@ -109,7 +109,7 @@
                 >
                     @csrf
 
-                    @foreach (['weight' => $sendificoRow->parcel['weight'] ?? '', 'length' => $sendificoRow->parcel['length'] ?? '', 'width' => $sendificoRow->parcel['width'] ?? '', 'height' => $sendificoRow->parcel['height'] ?? ''] as $field => $value)
+                    @foreach (['weight' => $sendificoRow->parcel['weight'] ?? '1', 'length' => $sendificoRow->parcel['length'] ?? '1', 'width' => $sendificoRow->parcel['width'] ?? '1', 'height' => $sendificoRow->parcel['height'] ?? '1'] as $field => $value)
                         <label class="grid gap-1 text-xs text-gray-600 dark:text-gray-300">
                             @lang('sendifico::app.admin.panel.parcel.'.$field)
 
@@ -245,6 +245,104 @@
                         @lang('sendifico::app.admin.panel.annul')
                     </button>
                 </form>
+            @endif
+        @endif
+
+        @php
+            $sendificoEditable = ! $sendificoRow || (! $sendificoRow->is_paid && ! $sendificoRow->is_terminal);
+
+            $sendificoCurrentTerritory = $sendificoRow?->territory_base_id
+                ? $sendificoTerritories->all()->firstWhere('territory_base_id', $sendificoRow->territory_base_id)?->searchable_text
+                : null;
+        @endphp
+
+        @if ($sendificoRow?->shipment_id && $sendificoEditable)
+            <details class="mt-3">
+                <summary class="cursor-pointer text-sm font-medium text-blue-600 dark:text-blue-400">
+                    @lang('sendifico::app.admin.panel.territory-change')@if ($sendificoCurrentTerritory) — {{ $sendificoCurrentTerritory }}@endif
+                </summary>
+
+                <form
+                    method="POST"
+                    action="{{ route('admin.sendifico.territory', $order->id) }}"
+                    class="mt-3 flex items-center gap-2"
+                >
+                    @csrf
+
+                    <v-sendifico-territory-select
+                        :territories='@json($sendificoTerritories->all()->map(fn ($territory) => ['id' => $territory->territory_base_id, 'text' => $territory->searchable_text])->values())'
+                        placeholder="@lang('sendifico::app.admin.panel.territory-placeholder')"
+                    ></v-sendifico-territory-select>
+
+                    <button type="submit" class="secondary-button">
+                        @lang('sendifico::app.admin.panel.confirm-territory')
+                    </button>
+                </form>
+            </details>
+        @endif
+
+        @if ($sendificoEditable)
+            @php($sendificoAddress = $order->shipping_address ?: $order->billing_address)
+
+            @if ($sendificoAddress)
+                <details class="mt-3">
+                    <summary class="cursor-pointer text-sm font-medium text-blue-600 dark:text-blue-400">
+                        @lang('sendifico::app.admin.panel.address.title')
+                    </summary>
+
+                    <form
+                        method="POST"
+                        action="{{ route('admin.sendifico.address', $order->id) }}"
+                        class="mt-3 grid max-w-[440px] grid-cols-2 gap-2"
+                    >
+                        @csrf
+
+                        @foreach (['first_name' => 'first-name', 'last_name' => 'last-name'] as $field => $label)
+                            <label class="grid gap-1 text-xs text-gray-600 dark:text-gray-300">
+                                @lang('sendifico::app.admin.panel.address.'.$label)
+
+                                <input
+                                    type="text"
+                                    name="{{ $field }}"
+                                    value="{{ old($field, $sendificoAddress->{$field}) }}"
+                                    required
+                                    class="rounded-md border px-2 py-1.5 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                                >
+                            </label>
+                        @endforeach
+
+                        <label class="col-span-2 grid gap-1 text-xs text-gray-600 dark:text-gray-300">
+                            @lang('sendifico::app.admin.panel.address.street')
+
+                            <textarea
+                                name="address"
+                                rows="2"
+                                required
+                                class="rounded-md border px-2 py-1.5 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                            >{{ old('address', $sendificoAddress->address) }}</textarea>
+                        </label>
+
+                        @foreach (['city' => 'city', 'state' => 'state', 'postcode' => 'postcode', 'phone' => 'phone'] as $field => $label)
+                            <label class="grid gap-1 text-xs text-gray-600 dark:text-gray-300">
+                                @lang('sendifico::app.admin.panel.address.'.$label)
+
+                                <input
+                                    type="text"
+                                    name="{{ $field }}"
+                                    value="{{ old($field, $sendificoAddress->{$field}) }}"
+                                    @if ($field !== 'postcode') required @endif
+                                    class="rounded-md border px-2 py-1.5 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                                >
+                            </label>
+                        @endforeach
+
+                        <div class="col-span-2">
+                            <button type="submit" class="secondary-button">
+                                @lang('sendifico::app.admin.panel.address.save')
+                            </button>
+                        </div>
+                    </form>
+                </details>
             @endif
         @endif
     </div>

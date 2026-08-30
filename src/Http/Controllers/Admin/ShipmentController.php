@@ -10,6 +10,7 @@ use Tapstar\Sendifico\Services\OperationResult;
 use Tapstar\Sendifico\Services\ShipmentService;
 use Tapstar\Sendifico\Services\TerritoryService;
 use Tapstar\Sendifico\Shipment\ShipmentStatus;
+use Webkul\Sales\Repositories\OrderAddressRepository;
 use Webkul\Sales\Repositories\OrderRepository;
 
 class ShipmentController extends Controller
@@ -40,6 +41,7 @@ class ShipmentController extends Controller
      */
     public function __construct(
         protected OrderRepository $orderRepository,
+        protected OrderAddressRepository $orderAddressRepository,
         protected ShipmentRepository $shipmentRepository,
         protected ShipmentService $shipmentService,
         protected TerritoryService $territoryService,
@@ -76,7 +78,58 @@ class ShipmentController extends Controller
 
         $this->territoryService->confirm($address->state, $address->city, $validated['territory_base_id']);
 
-        return $this->redirectWith($this->shipmentService->createDraft($order));
+        return $this->redirectWith($this->shipmentService->syncRecipient($order));
+    }
+
+    /**
+     * Correct the recipient address the shipment is built from, then push the
+     * correction onto the draft when one already exists.
+     *
+     * @param  int  $orderId
+     * @return RedirectResponse
+     */
+    public function updateAddress($orderId)
+    {
+        $order = $this->orderRepository->findOrFail($orderId);
+
+        $row = $this->shipmentRepository->findOneWhere(['order_id' => $order->id]);
+
+        if (
+            $row
+            && ($row->is_paid || $row->is_terminal)
+        ) {
+            session()->flash('error', trans('sendifico::app.result.recipient-locked'));
+
+            return redirect()->back();
+        }
+
+        $validated = request()->validate([
+            'first_name' => 'required|string|max:191',
+            'last_name'  => 'required|string|max:191',
+            'address'    => 'required|string|max:500',
+            'city'       => 'required|string|max:191',
+            'state'      => 'required|string|max:191',
+            'postcode'   => 'nullable|string|max:20',
+            'phone'      => 'required|string|max:30',
+        ]);
+
+        $address = $order->shipping_address ?: $order->billing_address;
+
+        if (! $address) {
+            session()->flash('error', trans('sendifico::app.result.address-missing'));
+
+            return redirect()->back();
+        }
+
+        $this->orderAddressRepository->update($validated, $address->id);
+
+        if (! $row) {
+            session()->flash('success', trans('sendifico::app.result.address-updated'));
+
+            return redirect()->back();
+        }
+
+        return $this->redirectWith($this->shipmentService->syncRecipient($order->refresh()));
     }
 
     /**

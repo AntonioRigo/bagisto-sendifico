@@ -36,6 +36,31 @@ class PayloadBuilder
      */
     public static function build($order, $senderAddressId, $territoryBaseId, $contentCategory, $goodsCollection)
     {
+        return [
+            'extId' => 'bagisto-'.$order->increment_id,
+            'integration' => [
+                'platform' => self::PLATFORM,
+                'url' => rtrim((string) config('app.url'), '/'),
+                'connectorVersion' => self::CONNECTOR_VERSION,
+            ],
+            'senderAddressId' => (int) $senderAddressId,
+            'recipientAddress' => static::recipient($order, $territoryBaseId),
+            'contents' => [$contentCategory],
+            'goodsCollection' => $goodsCollection,
+            'goodsCurrency' => 'USD',
+        ];
+    }
+
+    /**
+     * Build the recipient object from the order's current address, also used
+     * on its own to correct the recipient of an existing unpaid draft.
+     *
+     * @param  Order  $order
+     * @param  string  $territoryBaseId
+     * @return array
+     */
+    public static function recipient($order, $territoryBaseId)
+    {
         $address = $order->shipping_address ?: $order->billing_address;
 
         $recipient = [
@@ -61,18 +86,6 @@ class PayloadBuilder
             $recipient['zip'] = (string) $address->postcode;
         }
 
-        return [
-            'extId' => 'bagisto-'.$order->increment_id,
-            'integration' => [
-                'platform' => self::PLATFORM,
-                'url' => rtrim((string) config('app.url'), '/'),
-                'connectorVersion' => self::CONNECTOR_VERSION,
-            ],
-            'senderAddressId' => (int) $senderAddressId,
-            'recipientAddress' => $recipient,
-            'contents' => [$contentCategory],
-            'goodsCollection' => $goodsCollection,
-            'goodsCurrency' => 'USD',
-        ];
+        return $recipient;
     }
 }
