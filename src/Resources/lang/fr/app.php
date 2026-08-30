@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Expéditions Sendifico',
     ],
     'shop' => [
+        'canton' => 'Canton',
+        'invalid-vat-id' => 'Saisissez une cédula (10 chiffres) ou un RUC (13 chiffres) valide.',
+        'province' => 'Province',
+        'select-canton' => 'Choisissez un canton…',
+        'select-province' => 'Choisissez une province…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Saisissez une cédula (10 chiffres) ou un RUC (13 chiffres) valide.',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

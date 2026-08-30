@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Tapstar\Sendifico\Console\Commands\RefreshTerritories;
 use Tapstar\Sendifico\Console\Commands\SyncShipments;
+use Tapstar\Sendifico\Http\Requests\EcuadorCartAddressRequest;
 use Tapstar\Sendifico\Listeners\OrderSaved;
+use Webkul\Shop\Http\Requests\CartAddressRequest;
 
 class SendificoServiceProvider extends ServiceProvider
 {
@@ -19,8 +21,8 @@ class SendificoServiceProvider extends ServiceProvider
         $this->registerConfig();
 
         $this->app->bind(
-            \Webkul\Shop\Http\Requests\CartAddressRequest::class,
-            \Tapstar\Sendifico\Http\Requests\EcuadorCartAddressRequest::class
+            CartAddressRequest::class,
+            EcuadorCartAddressRequest::class
         );
     }
 
@@ -32,6 +34,8 @@ class SendificoServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/admin-routes.php');
+
+        $this->loadRoutesFrom(__DIR__.'/../Routes/shop-routes.php');
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'sendifico');
 

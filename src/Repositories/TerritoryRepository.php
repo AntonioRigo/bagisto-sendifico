@@ -65,4 +65,29 @@ class TerritoryRepository extends Repository
             ->orderBy('searchable_text')
             ->get();
     }
+
+    /**
+     * Get the country's territories as a province tree, for the checkout selectors.
+     *
+     * Provinces and their cantons are what an address needs, so parishes collapse
+     * into their canton and each canton appears once.
+     */
+    public function provinceTree(string $country): array
+    {
+        $tree = [];
+
+        foreach ($this->allForCountry($country) as $territory) {
+            $tree[$territory->territory1_name][$territory->territory2_name] = true;
+        }
+
+        ksort($tree);
+
+        return array_map(function (array $cantons) {
+            $names = array_keys($cantons);
+
+            sort($names);
+
+            return $names;
+        }, $tree);
+    }
 }

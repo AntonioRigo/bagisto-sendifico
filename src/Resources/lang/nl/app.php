@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Sendifico-zendingen',
     ],
     'shop' => [
+        'canton' => 'Kanton',
+        'invalid-vat-id' => 'Voer een geldige cédula (10 cijfers) of RUC (13 cijfers) in.',
+        'province' => 'Provincie',
+        'select-canton' => 'Kies een kanton…',
+        'select-province' => 'Kies een provincie…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Voer een geldige cédula (10 cijfers) of RUC (13 cijfers) in.',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

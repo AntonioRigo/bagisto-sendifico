@@ -5,11 +5,14 @@ return [
         'sendifico' => 'משלוחי Sendifico',
     ],
     'shop' => [
+        'canton' => 'קנטון (Cantón)',
+        'invalid-vat-id' => 'הזן cédula תקפה (10 ספרות) או RUC (13 ספרות).',
+        'province' => 'מחוז (Provincia)',
+        'select-canton' => 'בחרו קנטון…',
+        'select-province' => 'בחרו מחוז…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'הזן cédula תקפה (10 ספרות) או RUC (13 ספרות).',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Отправления Sendifico',
     ],
     'shop' => [
+        'canton' => 'Кантон',
+        'invalid-vat-id' => 'Введите действительную cédula (10 цифр) или RUC (13 цифр).',
+        'province' => 'Провинция',
+        'select-canton' => 'Выберите кантон…',
+        'select-province' => 'Выберите провинцию…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Введите действительную cédula (10 цифр) или RUC (13 цифр).',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

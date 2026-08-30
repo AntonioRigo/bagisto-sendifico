@@ -4,13 +4,15 @@ return [
     'acl' => [
         'sendifico' => 'Sendifico shipments',
     ],
-
     'shop' => [
+        'canton' => 'Canton',
+        'invalid-vat-id' => 'Enter a valid cédula (10 digits) or RUC (13 digits).',
+        'province' => 'Province',
+        'select-canton' => 'Select a canton…',
+        'select-province' => 'Select a province…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Enter a valid cédula (10 digits) or RUC (13 digits).',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',
@@ -43,7 +45,6 @@ return [
             'auto-draft-manual' => 'Manual, from the order page',
             'auto-draft-on-order' => 'Automatic, on every new order',
         ],
-
         'panel' => [
             'title' => 'Sendifico',
             'create-draft' => 'Create shipment draft',
@@ -108,7 +109,6 @@ return [
             ],
         ],
     ],
-
     'api-errors' => [
         'config-invalid' => 'The Sendifico configuration is invalid. Review the API settings in Configuration → Shipping Methods.',
         'auth-invalid' => 'The Sendifico API key is invalid or was revoked. Review it in Configuration → Shipping Methods.',
@@ -130,7 +130,6 @@ return [
         'annul-done' => 'The shipment was already cancelled or refunded.',
         'unknown' => 'Sendifico returned an unrecognized error (:code). Check the Sendifico log for details.',
     ],
-
     'result' => [
         'draft-exists' => 'This order already has Sendifico shipment :id.',
         'not-configured' => 'Sendifico is not configured. Set the API key in Configuration → Shipping Methods.',

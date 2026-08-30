@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Sendifico බෙදාහැරීම්',
     ],
     'shop' => [
+        'canton' => 'කැන්ටනය (Cantón)',
+        'invalid-vat-id' => 'වලංගු cédula (ඉලක්කම් 10) හෝ RUC (ඉලක්කම් 13) ඇතුළත් කරන්න.',
+        'province' => 'පළාත (Provincia)',
+        'select-canton' => 'කැන්ටනයක් තෝරන්න…',
+        'select-province' => 'පළාතක් තෝරන්න…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'වලංගු cédula (ඉලක්කම් 10) හෝ RUC (ඉලක්කම් 13) ඇතුළත් කරන්න.',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

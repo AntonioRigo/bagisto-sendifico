@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Sendifico gönderileri',
     ],
     'shop' => [
+        'canton' => 'Kanton (Cantón)',
+        'invalid-vat-id' => 'Geçerli bir cédula (10 hane) veya RUC (13 hane) girin.',
+        'province' => 'Eyalet (Provincia)',
+        'select-canton' => 'Bir kanton seçin…',
+        'select-province' => 'Bir eyalet seçin…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Geçerli bir cédula (10 hane) veya RUC (13 hane) girin.',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

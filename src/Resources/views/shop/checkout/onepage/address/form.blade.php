@@ -12,22 +12,6 @@
                 />
             </x-shop::form.control-group>
 
-            <!-- Company Name -->
-            <x-shop::form.control-group>
-                <x-shop::form.control-group.label>
-                    @lang('shop::app.checkout.onepage.address.company-name')
-                </x-shop::form.control-group.label>
-
-                <x-shop::form.control-group.control
-                    type="text"
-                    ::name="controlName + '.company_name'"
-                    ::value="address.company_name"
-                    :placeholder="trans('shop::app.checkout.onepage.address.company-name')"
-                />
-            </x-shop::form.control-group>
-
-            {!! view_render_event('bagisto.shop.checkout.onepage.address.form.company_name.after') !!}
-
             <!-- First Name -->
             <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
                 <x-shop::form.control-group>
@@ -68,6 +52,22 @@
                 </x-shop::form.control-group>
 
                 {!! view_render_event('bagisto.shop.checkout.onepage.address.form.last_name.after') !!}
+
+            <!-- Company Name -->
+            <x-shop::form.control-group>
+                <x-shop::form.control-group.label>
+                    @lang('shop::app.checkout.onepage.address.company-name')
+                </x-shop::form.control-group.label>
+
+                <x-shop::form.control-group.control
+                    type="text"
+                    ::name="controlName + '.company_name'"
+                    ::value="address.company_name"
+                    :placeholder="trans('shop::app.checkout.onepage.address.company-name')"
+                />
+            </x-shop::form.control-group>
+
+            {!! view_render_event('bagisto.shop.checkout.onepage.address.form.company_name.after') !!}
             </div>
 
             <!-- Email -->
@@ -185,46 +185,31 @@
 
                 {!! view_render_event('bagisto.shop.checkout.onepage.address.form.country.after') !!}
 
-                <!-- State -->
+                <!-- Province -->
                 <x-shop::form.control-group>
-                    <x-shop::form.control-group.label class="{{ core()->isStateRequired() ? 'required' : '' }} !mt-0">
-                        @lang('shop::app.checkout.onepage.address.state')
+                    <x-shop::form.control-group.label class="required !mt-0">
+                        @lang('sendifico::app.shop.province')
                     </x-shop::form.control-group.label>
 
-                    <template v-if="states">
-                        <template v-if="haveStates">
-                            <x-shop::form.control-group.control
-                                type="select"
-                                ::name="controlName + '.state'"
-                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
-                                ::value="address.state"
-                                :label="trans('shop::app.checkout.onepage.address.state')"
-                                :placeholder="trans('shop::app.checkout.onepage.address.state')"
-                            >
-                                <option value="">
-                                    @lang('shop::app.checkout.onepage.address.select-state')
-                                </option>
+                    <x-shop::form.control-group.control
+                        type="select"
+                        ::name="controlName + '.state'"
+                        ::value="address.state"
+                        v-model="selectedProvince"
+                        rules="required"
+                        :label="trans('sendifico::app.shop.province')"
+                    >
+                        <option value="">
+                            @lang('sendifico::app.shop.select-province')
+                        </option>
 
-                                <option
-                                    v-for='(state, index) in states[selectedCountry]'
-                                    :value="state.code"
-                                >
-                                    @{{ state.default_name }}
-                                </option>
-                            </x-shop::form.control-group.control>
-                        </template>
-
-                        <template v-else>
-                            <x-shop::form.control-group.control
-                                type="text"
-                                ::name="controlName + '.state'"
-                                ::value="address.state"
-                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
-                                :label="trans('shop::app.checkout.onepage.address.state')"
-                                :placeholder="trans('shop::app.checkout.onepage.address.state')"
-                            />
-                        </template>
-                    </template>
+                        <option
+                            v-for="province in provinces"
+                            :value="province"
+                        >
+                            @{{ province }}
+                        </option>
+                    </x-shop::form.control-group.control>
 
                     <x-shop::form.control-group.error ::name="controlName + '.state'" />
                 </x-shop::form.control-group>
@@ -233,20 +218,32 @@
             </div>
 
             <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
-                <!-- City -->
+                <!-- Canton -->
                 <x-shop::form.control-group>
                     <x-shop::form.control-group.label class="required !mt-0">
-                        @lang('shop::app.checkout.onepage.address.city')
+                        @lang('sendifico::app.shop.canton')
                     </x-shop::form.control-group.label>
 
                     <x-shop::form.control-group.control
-                        type="text"
+                        type="select"
                         ::name="controlName + '.city'"
                         ::value="address.city"
+                        v-model="selectedCanton"
                         rules="required"
-                        :label="trans('shop::app.checkout.onepage.address.city')"
-                        :placeholder="trans('shop::app.checkout.onepage.address.city')"
-                    />
+                        :label="trans('sendifico::app.shop.canton')"
+                        ::disabled="! cantons.length"
+                    >
+                        <option value="">
+                            @lang('sendifico::app.shop.select-canton')
+                        </option>
+
+                        <option
+                            v-for="canton in cantons"
+                            :value="canton"
+                        >
+                            @{{ canton }}
+                        </option>
+                    </x-shop::form.control-group.control>
 
                     <x-shop::form.control-group.error ::name="controlName + '.city'" />
                 </x-shop::form.control-group>
@@ -331,13 +328,32 @@
 
                     countries: [],
 
-                    states: null,
+                    territories: {},
+
+                    selectedProvince: this.address.state || '',
+
+                    selectedCanton: this.address.city || '',
                 }
             },
 
             computed: {
-                haveStates() {
-                    return !! this.states[this.selectedCountry]?.length;
+                provinces() {
+                    return Object.keys(this.territories);
+                },
+
+                cantons() {
+                    return this.territories[this.selectedProvince] ?? [];
+                },
+            },
+
+            watch: {
+                /**
+                 * A different province invalidates the canton chosen under the previous one.
+                 */
+                selectedProvince() {
+                    if (! this.cantons.includes(this.selectedCanton)) {
+                        this.selectedCanton = '';
+                    }
                 },
             },
 
@@ -348,7 +364,7 @@
 
                 this.getCountries();
 
-                this.getStates();
+                this.getTerritories();
             },
 
             methods: {
@@ -356,10 +372,10 @@
                     this.countries = [{ code: 'EC', name: 'Ecuador' }];
                 },
 
-                getStates() {
-                    this.$axios.get("{{ route('shop.api.core.states') }}")
+                getTerritories() {
+                    this.$axios.get("{{ route('shop.sendifico.territories') }}")
                         .then(response => {
-                            this.states = response.data.data;
+                            this.territories = response.data.data;
                         })
                         .catch(() => {});
                 },

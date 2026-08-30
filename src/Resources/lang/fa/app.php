@@ -5,11 +5,14 @@ return [
         'sendifico' => 'مرسولات Sendifico',
     ],
     'shop' => [
+        'canton' => 'کانتون (Cantón)',
+        'invalid-vat-id' => 'یک cédula معتبر (۱۰ رقم) یا RUC (۱۳ رقم) وارد کنید.',
+        'province' => 'استان (Provincia)',
+        'select-canton' => 'کانتون را انتخاب کنید…',
+        'select-province' => 'استان را انتخاب کنید…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'یک cédula معتبر (۱۰ رقم) یا RUC (۱۳ رقم) وارد کنید.',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

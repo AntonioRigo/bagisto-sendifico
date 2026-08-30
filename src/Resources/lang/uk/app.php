@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Відправлення Sendifico',
     ],
     'shop' => [
+        'canton' => 'Кантон',
+        'invalid-vat-id' => 'Введіть дійсну cédula (10 цифр) або RUC (13 цифр).',
+        'province' => 'Провінція',
+        'select-canton' => 'Оберіть кантон…',
+        'select-province' => 'Оберіть провінцію…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Введіть дійсну cédula (10 цифр) або RUC (13 цифр).',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

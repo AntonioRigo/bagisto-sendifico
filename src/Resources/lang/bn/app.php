@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Sendifico শিপমেন্ট',
     ],
     'shop' => [
+        'canton' => 'ক্যান্টন (Cantón)',
+        'invalid-vat-id' => 'বৈধ cédula (১০ সংখ্যা) বা RUC (১৩ সংখ্যা) লিখুন।',
+        'province' => 'প্রদেশ (Provincia)',
+        'select-canton' => 'ক্যান্টন নির্বাচন করুন…',
+        'select-province' => 'প্রদেশ নির্বাচন করুন…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'বৈধ cédula (১০ সংখ্যা) বা RUC (১৩ সংখ্যা) লিখুন।',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

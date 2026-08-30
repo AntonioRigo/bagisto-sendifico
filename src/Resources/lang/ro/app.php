@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Expedieri Sendifico',
     ],
     'shop' => [
+        'canton' => 'Canton',
+        'invalid-vat-id' => 'Introduceți o cédula (10 cifre) sau un RUC (13 cifre) valid.',
+        'province' => 'Provincie',
+        'select-canton' => 'Selectează un canton…',
+        'select-province' => 'Selectează o provincie…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Introduceți o cédula (10 cifre) sau un RUC (13 cifre) valid.',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

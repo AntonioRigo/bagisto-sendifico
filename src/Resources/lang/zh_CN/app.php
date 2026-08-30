@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Sendifico 货运',
     ],
     'shop' => [
+        'canton' => '州 (Cantón)',
+        'invalid-vat-id' => '请输入有效的 cédula（10 位）或 RUC（13 位）。',
+        'province' => '省 (Provincia)',
+        'select-canton' => '选择州…',
+        'select-province' => '选择省份…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => '请输入有效的 cédula（10 位）或 RUC（13 位）。',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

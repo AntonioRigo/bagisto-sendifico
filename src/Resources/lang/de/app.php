@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Sendifico-Sendungen',
     ],
     'shop' => [
+        'canton' => 'Kanton',
+        'invalid-vat-id' => 'Geben Sie eine gültige Cédula (10 Ziffern) oder einen RUC (13 Ziffern) ein.',
+        'province' => 'Provinz',
+        'select-canton' => 'Kanton wählen…',
+        'select-province' => 'Provinz wählen…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Geben Sie eine gültige Cédula (10 Ziffern) oder einen RUC (13 Ziffern) ein.',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

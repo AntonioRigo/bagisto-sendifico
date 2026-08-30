@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Pengiriman Sendifico',
     ],
     'shop' => [
+        'canton' => 'Kanton',
+        'invalid-vat-id' => 'Masukkan cédula (10 digit) atau RUC (13 digit) yang valid.',
+        'province' => 'Provinsi',
+        'select-canton' => 'Pilih kanton…',
+        'select-province' => 'Pilih provinsi…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Masukkan cédula (10 digit) atau RUC (13 digit) yang valid.',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',

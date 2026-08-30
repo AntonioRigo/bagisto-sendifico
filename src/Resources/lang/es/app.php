@@ -4,13 +4,15 @@ return [
     'acl' => [
         'sendifico' => 'Envíos Sendifico',
     ],
-
     'shop' => [
+        'canton' => 'Cantón',
+        'invalid-vat-id' => 'Ingresa una cédula (10 dígitos) o un RUC (13 dígitos) válido.',
+        'province' => 'Provincia',
+        'select-canton' => 'Selecciona un cantón…',
+        'select-province' => 'Selecciona una provincia…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'Ingresa una cédula (10 dígitos) o un RUC (13 dígitos) válido.',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',
@@ -43,7 +45,6 @@ return [
             'auto-draft-manual' => 'Manual, desde la ficha del pedido',
             'auto-draft-on-order' => 'Automático, con cada pedido nuevo',
         ],
-
         'panel' => [
             'title' => 'Sendifico',
             'create-draft' => 'Crear borrador de envío',
@@ -108,7 +109,6 @@ return [
             ],
         ],
     ],
-
     'api-errors' => [
         'config-invalid' => 'La configuración de Sendifico es inválida. Revisa los ajustes del API en Configuración → Métodos de envío.',
         'auth-invalid' => 'La API key de Sendifico es inválida o fue revocada. Revísala en Configuración → Métodos de envío.',
@@ -130,7 +130,6 @@ return [
         'annul-done' => 'El envío ya estaba anulado o reembolsado.',
         'unknown' => 'Sendifico devolvió un error no reconocido (:code). Revisa el log de Sendifico para más detalle.',
     ],
-
     'result' => [
         'draft-exists' => 'Este pedido ya tiene el envío :id en Sendifico.',
         'not-configured' => 'Sendifico no está configurado. Define la API key en Configuración → Métodos de envío.',

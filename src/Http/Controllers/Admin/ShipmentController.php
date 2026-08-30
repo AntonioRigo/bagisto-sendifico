@@ -105,12 +105,12 @@ class ShipmentController extends Controller
 
         $validated = request()->validate([
             'first_name' => 'required|string|max:191',
-            'last_name'  => 'required|string|max:191',
-            'address'    => 'required|string|max:500',
-            'city'       => 'required|string|max:191',
-            'state'      => 'required|string|max:191',
-            'postcode'   => 'nullable|string|max:20',
-            'phone'      => 'required|string|max:30',
+            'last_name' => 'required|string|max:191',
+            'address' => 'required|string|max:500',
+            'city' => 'required|string|max:191',
+            'state' => 'required|string|max:191',
+            'postcode' => 'nullable|string|max:20',
+            'phone' => 'required|string|max:30',
         ]);
 
         $address = $order->shipping_address ?: $order->billing_address;

@@ -123,7 +123,7 @@ class ShipmentService
      * paid or terminal shipment can no longer be corrected: the carrier
      * already has it.
      *
-     * @param  \Webkul\Sales\Contracts\Order  $order
+     * @param  Order  $order
      * @return OperationResult
      */
     public function syncRecipient($order)

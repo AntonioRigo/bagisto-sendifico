@@ -5,11 +5,14 @@ return [
         'sendifico' => 'Sendifico शिपमेंट',
     ],
     'shop' => [
+        'canton' => 'कैंटन (Cantón)',
+        'invalid-vat-id' => 'मान्य cédula (10 अंक) या RUC (13 अंक) दर्ज करें।',
+        'province' => 'प्रांत (Provincia)',
+        'select-canton' => 'कैंटन चुनें…',
+        'select-province' => 'प्रांत चुनें…',
         'vat-id' => 'Cédula o RUC',
         'vat-id-placeholder' => '1712345678001',
-        'invalid-vat-id' => 'मान्य cédula (10 अंक) या RUC (13 अंक) दर्ज करें।',
     ],
-
     'admin' => [
         'config' => [
             'page-title' => 'Sendifico',
