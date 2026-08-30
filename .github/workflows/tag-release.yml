@@ -1,0 +1,24 @@
+name: Tag release
+
+on:
+  push:
+    branches: [main]
+    paths: ['.release-version']
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: |
+          TAG="$(tr -d '[:space:]' < .release-version)"
+          if git ls-remote --exit-code origin "refs/tags/${TAG}" >/dev/null 2>&1; then
+            echo "Tag ${TAG} already exists, nothing to do."
+            exit 0
+          fi
+          git tag "${TAG}"
+          git push origin "refs/tags/${TAG}"
