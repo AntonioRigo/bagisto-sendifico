@@ -1,0 +1,24 @@
+{
+    "name": "tapstar/sendifico",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Tapstar",
+            "email": "antoniorigo@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Tapstar\\Sendifico\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tapstar\\Sendifico\\Providers\\SendificoServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
