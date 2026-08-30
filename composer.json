@@ -7,7 +7,9 @@
             "email": "antoniorigo@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=8.3"
+    },
     "autoload": {
         "psr-4": {
             "Tapstar\\Sendifico\\": "src/"
@@ -20,5 +22,15 @@
             ]
         }
     },
-    "minimum-stability": "dev"
+    "description": "Sendifico shipping integration for Bagisto 2.x — Ecuador-wide home delivery with territory matching, COD support and shipment tracking",
+    "keywords": [
+        "bagisto",
+        "sendifico",
+        "ecuador",
+        "shipping",
+        "carrier",
+        "laravel",
+        "ecommerce"
+    ],
+    "homepage": "https://github.com/AntonioRigo/bagisto-sendifico"
 }
