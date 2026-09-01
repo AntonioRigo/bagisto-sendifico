@@ -70,7 +70,7 @@ class PayloadBuilder
             'country' => 'EC',
         ];
 
-        if ($phone = PhoneNormalizer::toE164($address->phone)) {
+        if ($phone = PhoneNormalizer::toNational($address->phone)) {
             $recipient['phone'] = $phone;
         }
 

@@ -75,17 +75,41 @@ it('tolerates accents and small typos only above the confidence bar', function (
     expect(TerritoryMatcher::match(territories(), '', ''))->toBeNull();
 });
 
-it('normalizes phones to ecuadorian e164', function () {
+it('strips the country code so carriers get a national number', function (string $input, string $expected) {
     // Act & Assert
-    expect(PhoneNormalizer::toE164('0991234567'))->toBe('+593991234567');
+    expect(PhoneNormalizer::toNational($input))->toBe($expected);
+})->with([
+    'plain national' => ['0998110137', '0998110137'],
+    'without trunk zero' => ['998110137', '0998110137'],
+    'e164' => ['+593998110137', '0998110137'],
+    'e164 spaced' => ['+593 99 811 0137', '0998110137'],
+    'bracketed' => ['(+593) 998110137', '0998110137'],
+    'bracketed keeping the zero' => ['(+593) 0998110137', '0998110137'],
+    'country code without plus' => ['593998110137', '0998110137'],
+    'country code and trunk zero' => ['5930998110137', '0998110137'],
+    'international prefix' => ['00593998110137', '0998110137'],
+    'punctuated' => ['+593-99-811-0137', '0998110137'],
+    'dotted' => ['+593.99.811.0137', '0998110137'],
+    'landline' => ['+59342345678', '042345678'],
+    'landline national' => ['042345678', '042345678'],
+]);
 
-    expect(PhoneNormalizer::toE164('+593 99-123-4567'))->toBe('+593991234567');
+it('keeps a short number that only looks like it carries a country code', function () {
+    // Act & Assert
+    expect(PhoneNormalizer::toNational('05935678'))->toBe('05935678');
 
-    expect(PhoneNormalizer::toE164('593991234567'))->toBe('+593991234567');
+    expect(PhoneNormalizer::toNational('59345678'))->toBe('059345678');
+});
 
-    expect(PhoneNormalizer::toE164('  '))->toBeNull();
+it('has no number to send when the input holds no digits', function () {
+    // Act & Assert
+    expect(PhoneNormalizer::toNational(''))->toBeNull();
 
-    expect(PhoneNormalizer::toE164('abc'))->toBeNull();
+    expect(PhoneNormalizer::toNational('  '))->toBeNull();
+
+    expect(PhoneNormalizer::toNational('sin teléfono'))->toBeNull();
+
+    expect(PhoneNormalizer::toNational(null))->toBeNull();
 });
 
 it('collects nothing unless cod is enabled and the order is cash on delivery', function () {
@@ -157,7 +181,7 @@ it('builds a deferred shipment payload from an order', function () {
 
     expect($payload['recipientAddress']['streetLine1'])->toBe('Av. Amazonas N24-03, Edificio Plaza');
 
-    expect($payload['recipientAddress']['phone'])->toBe('+593991234567');
+    expect($payload['recipientAddress']['phone'])->toBe('0991234567');
 
     expect($payload['recipientAddress']['email'])->toBe('fallback@example.com');
 

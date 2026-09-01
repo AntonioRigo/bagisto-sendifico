@@ -62,7 +62,7 @@ it('creates a deferred draft for an order and learns the territory', function ()
 
         return str_starts_with($body['extId'], 'bagisto-')
             && $body['integration']['platform'] === 'bagisto'
-            && $body['recipientAddress']['phone'] === '+593991234567'
+            && $body['recipientAddress']['phone'] === '0991234567'
             && ! array_key_exists('parcel', $body);
     });
 });

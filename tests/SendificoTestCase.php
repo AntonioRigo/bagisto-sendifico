@@ -93,7 +93,7 @@ class SendificoTestCase extends TestCase
             'city' => $city,
             'state' => $state,
             'country' => 'EC',
-            'phone' => '0991234567',
+            'phone' => '+593 99 123 4567',
         ]);
 
         OrderPayment::factory()->create([
