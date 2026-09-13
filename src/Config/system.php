@@ -48,6 +48,24 @@ return [
                 'channel_based' => true,
                 'locale_based' => false,
             ], [
+                'name' => 'rate_mode',
+                'title' => 'sendifico::app.admin.config.rate-mode',
+                'info' => 'sendifico::app.admin.config.rate-mode-info',
+                'type' => 'select',
+                'default' => 'per_order',
+                'depends' => 'active:1',
+                'options' => [
+                    [
+                        'title' => 'sendifico::app.admin.config.rate-mode-order',
+                        'value' => 'per_order',
+                    ], [
+                        'title' => 'sendifico::app.admin.config.rate-mode-item',
+                        'value' => 'per_item',
+                    ],
+                ],
+                'channel_based' => true,
+                'locale_based' => false,
+            ], [
                 'name' => 'free_threshold',
                 'title' => 'sendifico::app.admin.config.free-threshold',
                 'info' => 'sendifico::app.admin.config.free-threshold-info',

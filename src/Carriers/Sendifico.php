@@ -23,7 +23,7 @@ class Sendifico extends AbstractShipping
     protected $method = 'sendifico_standard';
 
     /**
-     * Calculate the rate: a flat charge, waived above the free-shipping threshold.
+     * Calculate the rate: charged once per order or once per shippable unit, waived above the free-shipping threshold.
      *
      * @return CartShippingRate|false
      */
@@ -35,7 +35,7 @@ class Sendifico extends AbstractShipping
 
         $cart = Cart::getCart();
 
-        $baseRate = $this->isFreeFor($cart) ? 0.0 : (float) $this->getConfigData('default_rate');
+        $baseRate = $this->isFreeFor($cart) ? 0.0 : $this->rateFor($cart);
 
         $cartShippingRate = new CartShippingRate;
 
@@ -48,6 +48,27 @@ class Sendifico extends AbstractShipping
         $cartShippingRate->base_price = $baseRate;
 
         return $cartShippingRate;
+    }
+
+    /**
+     * Price the cart: the configured rate once, or once for every unit of a shippable product.
+     *
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
+     * @return float
+     */
+    protected function rateFor($cart)
+    {
+        $rate = (float) $this->getConfigData('default_rate');
+
+        if ($this->getConfigData('rate_mode') !== 'per_item') {
+            return $rate;
+        }
+
+        $units = (int) $cart->items
+            ->filter(fn ($item) => $item->getTypeInstance()->isStockable())
+            ->sum('quantity');
+
+        return $rate * max($units, 1);
     }
 
     /**

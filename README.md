@@ -6,6 +6,8 @@
 - **Territory matching** — Sendifico's coverage map is mirrored locally and
   checkout addresses are matched against it, so the method only offers itself
   where delivery actually exists
+- **Flat or per-unit rate** — charge the configured rate once per order, or once
+  for every unit of a shippable product in the cart
 - **Free-shipping threshold** — configurable order total above which the rate
   drops to zero
 - **COD** — cash-on-delivery amounts calculated and passed to the carrier
@@ -47,7 +49,8 @@ php artisan optimize:clear
 ## Configuration
 
 Admin → Configure → Sales → **Carriers → Sendifico**: set the API key, the
-default rate, and the free-shipping threshold, then activate the method.
+default rate, whether it is charged per order or per unit shipped, and the
+free-shipping threshold (0 disables it), then activate the method.
 
 ## Scheduled tasks
 
