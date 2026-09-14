@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Envío gratis',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Envía con la red multicourier de Ecuador: tarifa plana en el checkout, borradores desde los pedidos, compra, tracking y etiquetas.',

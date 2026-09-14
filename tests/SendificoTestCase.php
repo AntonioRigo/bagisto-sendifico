@@ -5,8 +5,11 @@ namespace Tapstar\Sendifico\Tests;
 use Tapstar\Sendifico\Repositories\TerritoryRepository;
 use Tests\TestCase;
 use Webkul\Admin\Tests\Concerns\AdminTestBench;
+use Webkul\Attribute\Models\Attribute;
 use Webkul\Core\Models\CoreConfig;
 use Webkul\Payment\Tests\Concerns\ProvidePaymentHelpers;
+use Webkul\Product\Models\Product;
+use Webkul\Product\Models\ProductAttributeValue;
 use Webkul\Sales\Models\Order;
 use Webkul\Sales\Models\OrderAddress;
 use Webkul\Sales\Models\OrderPayment;
@@ -42,6 +45,24 @@ class SendificoTestCase extends TestCase
         ], $overrides) as $field => $value) {
             $this->setSendificoConfig($field, $value);
         }
+    }
+
+    /**
+     * Mark a product for free shipping through its "Free shipping" toggle.
+     */
+    public function markFreeShipping(Product $product): void
+    {
+        $attribute = Attribute::query()->where('code', 'free_shipping')->firstOrFail();
+
+        ProductAttributeValue::query()->updateOrCreate([
+            'product_id' => $product->id,
+            'attribute_id' => $attribute->id,
+            'channel' => null,
+            'locale' => null,
+        ], [
+            'boolean_value' => 1,
+            'unique_id' => $product->id.'|'.$attribute->id,
+        ]);
     }
 
     /**

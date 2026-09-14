@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Darmowa wysyłka',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Wysyłaj siecią wielu przewoźników w Ekwadorze: stała stawka w koszyku, szkice z zamówień, zakup, śledzenie i etykiety.',

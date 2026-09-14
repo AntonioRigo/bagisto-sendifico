@@ -2,6 +2,7 @@
 
 namespace Tapstar\Sendifico\Carriers;
 
+use Illuminate\Support\Collection;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Checkout\Models\CartShippingRate;
 use Webkul\Shipping\Carriers\AbstractShipping;
@@ -51,24 +52,41 @@ class Sendifico extends AbstractShipping
     }
 
     /**
-     * Price the cart: the configured rate once, or once for every unit of a shippable product.
+     * Price the cart: the configured rate once, or once for every unit of a shippable product. Products marked
+     * for free shipping add nothing, so a cart holding only those ships free.
      *
      * @param  \Webkul\Checkout\Contracts\Cart  $cart
      * @return float
      */
     protected function rateFor($cart)
     {
+        $items = $this->chargeableItems($cart);
+
+        if ($items->isEmpty()) {
+            return 0.0;
+        }
+
         $rate = (float) $this->getConfigData('default_rate');
 
         if ($this->getConfigData('rate_mode') !== 'per_item') {
             return $rate;
         }
 
-        $units = (int) $cart->items
-            ->filter(fn ($item) => $item->getTypeInstance()->isStockable())
-            ->sum('quantity');
+        return $rate * (int) $items->sum('quantity');
+    }
 
-        return $rate * max($units, 1);
+    /**
+     * The cart's shippable items whose product is not marked for free shipping. A configurable product's
+     * variants follow the toggle on the product itself.
+     *
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
+     * @return Collection
+     */
+    protected function chargeableItems($cart)
+    {
+        return $cart->items
+            ->filter(fn ($item) => $item->getTypeInstance()->isStockable())
+            ->reject(fn ($item) => (bool) $item->product?->free_shipping);
     }
 
     /**

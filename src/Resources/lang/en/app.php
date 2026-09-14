@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Free shipping',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Ship with Ecuador\'s multi-carrier network: flat-rate checkout shipping, drafts from orders, purchase, tracking and labels.',

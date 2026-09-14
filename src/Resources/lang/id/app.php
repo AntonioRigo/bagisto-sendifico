@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Gratis ongkir',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Kirim lewat jaringan multi-kurir Ekuador: tarif flat di checkout, draf dari pesanan, pembelian, pelacakan, dan label.',

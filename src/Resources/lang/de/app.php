@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Kostenloser Versand',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Versand über Ecuadors Multi-Carrier-Netzwerk: Pauschalversand im Checkout, Entwürfe aus Bestellungen, Kauf, Tracking und Etiketten.',

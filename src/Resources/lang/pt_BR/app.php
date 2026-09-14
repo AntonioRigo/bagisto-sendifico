@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Frete grátis',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Envie pela rede multitransportadora do Equador: frete fixo no checkout, rascunhos a partir dos pedidos, compra, rastreamento e etiquetas.',

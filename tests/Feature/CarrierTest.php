@@ -2,6 +2,7 @@
 
 use Tapstar\Sendifico\Carriers\Sendifico;
 use Webkul\Checkout\Facades\Cart;
+use Webkul\Faker\Helpers\Product as ProductFaker;
 
 it('charges the flat rate below the free shipping threshold', function () {
     // Arrange
@@ -89,6 +90,79 @@ it('keeps charging per unit when the free shipping threshold is disabled', funct
 
     // Assert
     expect((float) $rate->base_price)->toBeGreaterThan(0.0);
+});
+
+it('ships free when every shippable item is marked for free shipping', function () {
+    // Arrange
+    $this->configureSendifico([
+        'default_rate' => '8',
+        'rate_mode' => 'per_item',
+        'free_threshold' => '0',
+    ]);
+
+    $cart = $this->createCartWithItems('payphone', ['base_currency_code' => 'USD']);
+
+    $this->markFreeShipping($cart->items->first()->product);
+
+    Cart::setCart($cart->fresh());
+
+    // Act
+    $rate = app(Sendifico::class)->calculate();
+
+    // Assert
+    expect((float) $rate->base_price)->toBe(0.0);
+});
+
+it('charges only the shippable units of products without free shipping', function () {
+    // Arrange
+    $this->configureSendifico([
+        'default_rate' => '8',
+        'rate_mode' => 'per_item',
+        'free_threshold' => '0',
+    ]);
+
+    $cart = $this->createCartWithItems('payphone', ['base_currency_code' => 'USD']);
+
+    $freeItem = $cart->items->first();
+
+    $this->markFreeShipping($freeItem->product);
+
+    $chargedProduct = (new ProductFaker([]))->getSimpleProductFactory()->create();
+
+    $chargedItem = $freeItem->replicate();
+
+    $chargedItem->product_id = $chargedProduct->id;
+
+    $chargedItem->sku = $chargedProduct->sku;
+
+    $chargedItem->quantity = 2;
+
+    $chargedItem->save();
+
+    Cart::setCart($cart->fresh());
+
+    // Act
+    $rate = app(Sendifico::class)->calculate();
+
+    // Assert
+    expect((float) $rate->base_price)->toBe(16.0);
+});
+
+it('waives the per-order rate when the cart holds only free-shipping products', function () {
+    // Arrange
+    $this->configureSendifico(['free_threshold' => '0']);
+
+    $cart = $this->createCartWithItems('payphone', ['base_currency_code' => 'USD']);
+
+    $this->markFreeShipping($cart->items->first()->product);
+
+    Cart::setCart($cart->fresh());
+
+    // Act
+    $rate = app(Sendifico::class)->calculate();
+
+    // Assert
+    expect((float) $rate->base_price)->toBe(0.0);
 });
 
 it('is unavailable when disabled', function () {

@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'משלוח חינם',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'שליחה ברשת רב-מובילים של אקוודור: תעריף קבוע בקופה, טיוטות מהזמנות, רכישה, מעקב ותוויות.',

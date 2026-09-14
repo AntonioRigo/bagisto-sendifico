@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => '免运费',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => '通过厄瓜多尔多承运商网络发货：结账页固定运费、从订单创建草稿、购买、跟踪与面单。',

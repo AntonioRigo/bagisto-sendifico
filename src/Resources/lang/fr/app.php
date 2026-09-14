@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Livraison gratuite',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Expédiez via le réseau multi-transporteurs de l’Équateur : tarif fixe au checkout, brouillons depuis les commandes, achat, suivi et étiquettes.',

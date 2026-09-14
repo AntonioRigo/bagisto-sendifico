@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Ücretsiz kargo',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Ekvador’un çoklu kargo ağıyla gönderin: ödeme sayfasında sabit ücret, siparişlerden taslak, satın alma, takip ve etiketler.',

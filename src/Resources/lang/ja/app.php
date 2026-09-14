@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => '送料無料',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'エクアドルのマルチキャリア網で配送：チェックアウトの定額送料、注文からのドラフト作成、購入・追跡・ラベル。',

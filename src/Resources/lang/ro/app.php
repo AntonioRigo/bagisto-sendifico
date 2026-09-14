@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Livrare gratuită',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Expediază prin rețeaua multi-curier din Ecuador: tarif fix la checkout, ciorne din comenzi, cumpărare, urmărire și etichete.',

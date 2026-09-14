@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'ارسال رایگان',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'ارسال با شبکه چندشرکتی اکوادور: نرخ ثابت در پرداخت، پیش‌نویس از سفارش‌ها، خرید، رهگیری و برچسب.',

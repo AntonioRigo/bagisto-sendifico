@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Spedizione gratuita',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Spedisci con la rete multi-corriere dell’Ecuador: tariffa fissa al checkout, bozze dagli ordini, acquisto, tracking ed etichette.',

@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'Enviament gratuït',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'Envia amb la xarxa multitransportista de l’Equador: tarifa plana al checkout, esborranys des de les comandes, compra, seguiment i etiquetes.',

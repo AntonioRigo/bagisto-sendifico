@@ -14,6 +14,10 @@ return [
         'vat-id-placeholder' => '1712345678001',
     ],
     'admin' => [
+        'attribute' => [
+            'free-shipping' => 'شحن مجاني',
+        ],
+
         'config' => [
             'page-title' => 'Sendifico',
             'page-info' => 'الشحن عبر شبكة النقل المتعددة في الإكوادور: تعرفة ثابتة عند الدفع، مسودات من الطلبات، شراء وتتبع وملصقات.',

@@ -10,6 +10,9 @@
   for every unit of a shippable product in the cart
 - **Free-shipping threshold** — configurable order total above which the rate
   drops to zero
+- **Free shipping per product** — a "Free shipping" toggle in each product's
+  Shipping group; those products add nothing to the charge, and an order
+  holding only them ships free
 - **COD** — cash-on-delivery amounts calculated and passed to the carrier
 - **Shipment lifecycle** — shipments are created from the admin order page,
   tracked, and synced back on a schedule
@@ -50,7 +53,9 @@ php artisan optimize:clear
 
 Admin → Configure → Sales → **Carriers → Sendifico**: set the API key, the
 default rate, whether it is charged per order or per unit shipped, and the
-free-shipping threshold (0 disables it), then activate the method.
+free-shipping threshold (0 disables it), then activate the method. Products
+that ship free are marked with the **Free shipping** toggle on the product
+itself.
 
 ## Scheduled tasks
 
