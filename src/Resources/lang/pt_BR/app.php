@@ -32,6 +32,8 @@ return [
             'rate-mode-item' => 'Por unidade enviada',
             'free-threshold' => 'Frete grátis a partir de (USD)',
             'free-threshold-info' => 'Pedidos cujo subtotal atinge esse valor têm frete grátis. Deixe 0 para desativar.',
+            'province-surcharges' => 'Taxas adicionais por província',
+            'province-surcharges-info' => 'Uma linha por província com a taxa adicional em USD, por exemplo GALAPAGOS: 10. É somada ao frete mesmo quando o frete é grátis.',
             'api-key' => 'Chave de API',
             'api-key-info' => 'Crie em app.sendifico.com/integrations. Ela pode gastar da sua carteira: trate-a como uma credencial de pagamento.',
             'sender-address-id' => 'ID do endereço remetente',

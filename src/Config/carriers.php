@@ -11,6 +11,7 @@ return [
         'default_rate' => '6',
         'rate_mode' => 'per_order',
         'free_threshold' => '25',
+        'province_surcharges' => '',
         'class' => Sendifico::class,
     ],
 ];

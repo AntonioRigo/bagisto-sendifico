@@ -32,6 +32,8 @@ return [
             'rate-mode-item' => 'Per unitat enviada',
             'free-threshold' => 'Enviament gratuït des de (USD)',
             'free-threshold-info' => 'Les comandes amb un subtotal que arribi a aquest import s’envien gratis. Deixa 0 per desactivar-ho.',
+            'province-surcharges' => 'Recàrrecs per província',
+            'province-surcharges-info' => 'Una línia per província amb el recàrrec en USD, per exemple GALAPAGOS: 10. S’afegeix a l’enviament fins i tot quan l’enviament és gratuït.',
             'api-key' => 'Clau API',
             'api-key-info' => 'Crea-la a app.sendifico.com/integrations. Pot gastar del teu wallet: tracta-la com una credencial de pagament.',
             'sender-address-id' => 'ID de l’adreça d’origen',

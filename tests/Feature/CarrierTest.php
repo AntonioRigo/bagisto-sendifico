@@ -165,6 +165,74 @@ it('waives the per-order rate when the cart holds only free-shipping products', 
     expect((float) $rate->base_price)->toBe(0.0);
 });
 
+it('adds the surcharge of the destination province to the rate', function () {
+    // Arrange
+    $this->configureSendifico([
+        'default_rate' => '8',
+        'rate_mode' => 'per_item',
+        'free_threshold' => '0',
+        'province_surcharges' => "PICHINCHA: 3\nGalápagos: 10",
+    ]);
+
+    $cart = $this->createCartWithItems('payphone', ['base_currency_code' => 'USD']);
+
+    $this->shipToProvince($cart, 'GALAPAGOS');
+
+    Cart::setCart($cart->fresh());
+
+    // Act
+    $rate = app(Sendifico::class)->calculate();
+
+    // Assert
+    expect((float) $rate->base_price)->toBe(8.0 * $cart->items->sum('quantity') + 10.0);
+});
+
+it('keeps the province surcharge when shipping is otherwise free', function () {
+    // Arrange
+    $this->configureSendifico([
+        'default_rate' => '8',
+        'rate_mode' => 'per_item',
+        'free_threshold' => '0',
+        'province_surcharges' => 'GALAPAGOS: 10',
+    ]);
+
+    $cart = $this->createCartWithItems('payphone', ['base_currency_code' => 'USD']);
+
+    $this->markFreeShipping($cart->items->first()->product);
+
+    $this->shipToProvince($cart, 'GALAPAGOS');
+
+    Cart::setCart($cart->fresh());
+
+    // Act
+    $rate = app(Sendifico::class)->calculate();
+
+    // Assert
+    expect((float) $rate->base_price)->toBe(10.0);
+});
+
+it('adds no surcharge for a province that is not listed', function () {
+    // Arrange
+    $this->configureSendifico([
+        'default_rate' => '8',
+        'rate_mode' => 'per_item',
+        'free_threshold' => '0',
+        'province_surcharges' => 'GALAPAGOS: 10',
+    ]);
+
+    $cart = $this->createCartWithItems('payphone', ['base_currency_code' => 'USD']);
+
+    $this->shipToProvince($cart, 'GUAYAS');
+
+    Cart::setCart($cart->fresh());
+
+    // Act
+    $rate = app(Sendifico::class)->calculate();
+
+    // Assert
+    expect((float) $rate->base_price)->toBe(8.0 * $cart->items->sum('quantity'));
+});
+
 it('is unavailable when disabled', function () {
     // Arrange
     $this->setSendificoConfig('active', '0');

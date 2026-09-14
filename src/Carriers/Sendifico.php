@@ -3,6 +3,7 @@
 namespace Tapstar\Sendifico\Carriers;
 
 use Illuminate\Support\Collection;
+use Tapstar\Sendifico\Territory\TerritoryMatcher;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Checkout\Models\CartShippingRate;
 use Webkul\Shipping\Carriers\AbstractShipping;
@@ -24,7 +25,8 @@ class Sendifico extends AbstractShipping
     protected $method = 'sendifico_standard';
 
     /**
-     * Calculate the rate: charged once per order or once per shippable unit, waived above the free-shipping threshold.
+     * Calculate the rate: charged once per order or once per shippable unit, waived above the free-shipping threshold,
+     * plus the surcharge of the destination province, which applies even when shipping is otherwise free.
      *
      * @return CartShippingRate|false
      */
@@ -36,7 +38,7 @@ class Sendifico extends AbstractShipping
 
         $cart = Cart::getCart();
 
-        $baseRate = $this->isFreeFor($cart) ? 0.0 : $this->rateFor($cart);
+        $baseRate = ($this->isFreeFor($cart) ? 0.0 : $this->rateFor($cart)) + $this->surchargeFor($cart);
 
         $cartShippingRate = new CartShippingRate;
 
@@ -87,6 +89,34 @@ class Sendifico extends AbstractShipping
         return $cart->items
             ->filter(fn ($item) => $item->getTypeInstance()->isStockable())
             ->reject(fn ($item) => (bool) $item->product?->free_shipping);
+    }
+
+    /**
+     * The surcharge configured for the province of the shipping address, one "PROVINCE: amount" per line.
+     *
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
+     * @return float
+     */
+    protected function surchargeFor($cart)
+    {
+        $province = TerritoryMatcher::normalize($cart->shipping_address?->state);
+
+        if (! $province) {
+            return 0.0;
+        }
+
+        foreach (preg_split('/\R/', (string) $this->getConfigData('province_surcharges')) as $line) {
+            [$name, $amount] = array_pad(explode(':', $line, 2), 2, '');
+
+            if (
+                is_numeric(trim($amount))
+                && TerritoryMatcher::normalize($name) === $province
+            ) {
+                return (float) trim($amount);
+            }
+        }
+
+        return 0.0;
     }
 
     /**

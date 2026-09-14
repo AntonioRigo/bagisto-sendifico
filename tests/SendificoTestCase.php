@@ -6,6 +6,8 @@ use Tapstar\Sendifico\Repositories\TerritoryRepository;
 use Tests\TestCase;
 use Webkul\Admin\Tests\Concerns\AdminTestBench;
 use Webkul\Attribute\Models\Attribute;
+use Webkul\Checkout\Models\Cart;
+use Webkul\Checkout\Models\CartAddress;
 use Webkul\Core\Models\CoreConfig;
 use Webkul\Payment\Tests\Concerns\ProvidePaymentHelpers;
 use Webkul\Product\Models\Product;
@@ -63,6 +65,19 @@ class SendificoTestCase extends TestCase
             'boolean_value' => 1,
             'unique_id' => $product->id.'|'.$attribute->id,
         ]);
+    }
+
+    /**
+     * Point the cart's shipping address at a province.
+     */
+    public function shipToProvince(Cart $cart, string $province): void
+    {
+        $address = $cart->shipping_address ?? CartAddress::factory()->create([
+            'cart_id' => $cart->id,
+            'address_type' => CartAddress::ADDRESS_TYPE_SHIPPING,
+        ]);
+
+        $address->update(['state' => $province]);
     }
 
     /**

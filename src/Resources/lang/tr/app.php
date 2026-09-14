@@ -32,6 +32,8 @@ return [
             'rate-mode-item' => 'Gönderilen adet başına',
             'free-threshold' => 'Ücretsiz kargo alt sınırı (USD)',
             'free-threshold-info' => 'Ara toplamı bu tutara ulaşan siparişler ücretsiz gönderilir. Devre dışı bırakmak için 0 bırakın.',
+            'province-surcharges' => 'İl bazında ek ücretler',
+            'province-surcharges-info' => 'Her il için bir satırda USD cinsinden ek ücreti yazın, örneğin GALAPAGOS: 10. Kargo ücretsiz olsa bile kargo ücretine eklenir.',
             'api-key' => 'API anahtarı',
             'api-key-info' => 'app.sendifico.com/integrations adresinde oluşturun. Cüzdanınızdan harcama yapabilir; ödeme bilgisi gibi koruyun.',
             'sender-address-id' => 'Gönderici adres ID’si',

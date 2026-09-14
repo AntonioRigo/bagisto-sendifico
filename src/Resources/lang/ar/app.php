@@ -32,6 +32,8 @@ return [
             'rate-mode-item' => 'لكل وحدة مشحونة',
             'free-threshold' => 'شحن مجاني ابتداءً من (USD)',
             'free-threshold-info' => 'الطلبات التي يبلغ مجموعها الفرعي هذا المبلغ تُشحن مجانًا. اترك 0 للتعطيل.',
+            'province-surcharges' => 'رسوم إضافية حسب المقاطعة',
+            'province-surcharges-info' => 'سطر لكل مقاطعة مع رسومها الإضافية بالدولار، مثل GALAPAGOS: 10. تُضاف إلى تكلفة الشحن حتى عندما يكون الشحن مجانيًا.',
             'api-key' => 'مفتاح API',
             'api-key-info' => 'أنشئه في app.sendifico.com/integrations. يمكنه الإنفاق من محفظتك، فعامله كبيانات دفع.',
             'sender-address-id' => 'معرّف عنوان المرسل',

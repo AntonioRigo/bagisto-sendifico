@@ -32,6 +32,8 @@ return [
             'rate-mode-item' => '按配送件数',
             'free-threshold' => '免运费门槛（USD）',
             'free-threshold-info' => '小计达到此金额的订单免运费。填 0 表示停用。',
+            'province-surcharges' => '按省份加收运费',
+            'province-surcharges-info' => '每行填写一个省份及其加收金额(美元),例如 GALAPAGOS: 10。即使免运费也会加收。',
             'api-key' => 'API 密钥',
             'api-key-info' => '在 app.sendifico.com/integrations 创建。它可以消费您的钱包，请像支付凭证一样保管。',
             'sender-address-id' => '发件地址 ID',

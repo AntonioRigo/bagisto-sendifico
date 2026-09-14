@@ -32,6 +32,8 @@ return [
             'rate-mode-item' => 'Per unitate livrată',
             'free-threshold' => 'Livrare gratuită de la (USD)',
             'free-threshold-info' => 'Comenzile al căror subtotal atinge această sumă se livrează gratuit. Lasă 0 pentru dezactivare.',
+            'province-surcharges' => 'Suprataxe pe provincie',
+            'province-surcharges-info' => 'Câte o linie pe provincie cu suprataxa în USD, de exemplu GALAPAGOS: 10. Se adaugă la livrare chiar și când livrarea este gratuită.',
             'api-key' => 'Cheie API',
             'api-key-info' => 'Creeaz-o pe app.sendifico.com/integrations. Poate cheltui din portofel: trateaz-o ca pe o credențială de plată.',
             'sender-address-id' => 'ID adresă expeditor',

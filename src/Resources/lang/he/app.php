@@ -32,6 +32,8 @@ return [
             'rate-mode-item' => 'לכל יחידה שנשלחת',
             'free-threshold' => 'משלוח חינם החל מ-(USD)',
             'free-threshold-info' => 'הזמנות שסכום הביניים שלהן מגיע לסכום זה נשלחות חינם. השאירו 0 לביטול.',
+            'province-surcharges' => 'תוספות לפי מחוז',
+            'province-surcharges-info' => 'שורה לכל מחוז עם התוספת בדולרים, למשל GALAPAGOS: 10. התוספת נגבית גם כשהמשלוח חינם.',
             'api-key' => 'מפתח API',
             'api-key-info' => 'צרו אותו ב-app.sendifico.com/integrations. הוא יכול להוציא כסף מהארנק — התייחסו אליו כאל אמצעי תשלום.',
             'sender-address-id' => 'מזהה כתובת השולח',

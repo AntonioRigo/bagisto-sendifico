@@ -32,6 +32,8 @@ return [
             'rate-mode-item' => 'Za wysłaną sztukę',
             'free-threshold' => 'Darmowa wysyłka od (USD)',
             'free-threshold-info' => 'Zamówienia, których suma częściowa osiągnie tę kwotę, wysyłane są za darmo. Zostaw 0, aby wyłączyć.',
+            'province-surcharges' => 'Dopłaty według prowincji',
+            'province-surcharges-info' => 'Jedna linia na prowincję z dopłatą w USD, na przykład GALAPAGOS: 10. Dopłata jest doliczana nawet przy darmowej wysyłce.',
             'api-key' => 'Klucz API',
             'api-key-info' => 'Utwórz go na app.sendifico.com/integrations. Może wydawać środki z portfela — traktuj go jak dane płatnicze.',
             'sender-address-id' => 'ID adresu nadawcy',
