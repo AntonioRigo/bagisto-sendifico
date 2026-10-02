@@ -9,9 +9,11 @@ class CedulaORuc implements ValidationRule
 {
     /**
      * Validate an Ecuadorian cédula (10 digits) or RUC (13 digits), including
-     * the SRI check digit for all three RUC classes: natural person (third
-     * digit 0-5, módulo 10), public entity (third digit 6, módulo 11) and
-     * private company (third digit 9, módulo 11).
+     * the SRI check digit for all three RUC classes: natural person (módulo
+     * 10), public entity (third digit 6, módulo 11) and private company (third
+     * digit 9, módulo 11). The Registro Civil also issues cédulas whose third
+     * digit is 6, so a 13 digit number starting with one of those is read as a
+     * natural person when it fails the public entity check.
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
@@ -42,7 +44,7 @@ class CedulaORuc implements ValidationRule
             return false;
         }
 
-        if ((int) $digits[2] > 5) {
+        if ((int) $digits[2] > 6) {
             return false;
         }
 
@@ -70,8 +72,15 @@ class CedulaORuc implements ValidationRule
         }
 
         if ($third === 6) {
-            return static::passesModulo11($digits, [3, 2, 7, 6, 5, 4, 3, 2], 8)
-                && substr($digits, 9) !== '0000';
+            if (
+                static::passesModulo11($digits, [3, 2, 7, 6, 5, 4, 3, 2], 8)
+                && substr($digits, 9) !== '0000'
+            ) {
+                return true;
+            }
+
+            return static::isValidCedula(substr($digits, 0, 10))
+                && substr($digits, 10) !== '000';
         }
 
         if ($third === 9) {
