@@ -19,6 +19,10 @@ return [
         ],
 
         'config' => [
+            'quote-phone' => "Phone used when quoting",
+            'quote-phone-info' => "Couriers will not quote without a contact, so a store number stands in while only prices are being asked for.",
+            'quote-email' => "Email used when quoting",
+
             'page-title' => 'Sendifico',
             'page-info' => 'Expédiez via le réseau multi-transporteurs de l’Équateur : tarif fixe au checkout, brouillons depuis les commandes, achat, suivi et étiquettes.',
             'status' => 'Statut',

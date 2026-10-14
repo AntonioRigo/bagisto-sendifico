@@ -19,6 +19,10 @@ return [
         ],
 
         'config' => [
+            'quote-phone' => "Phone used when quoting",
+            'quote-phone-info' => "Couriers will not quote without a contact, so a store number stands in while only prices are being asked for.",
+            'quote-email' => "Email used when quoting",
+
             'page-title' => 'Sendifico',
             'page-info' => 'ইকুয়েডরের মাল্টি-ক্যারিয়ার নেটওয়ার্কে পাঠান: চেকআউটে ফ্ল্যাট রেট, অর্ডার থেকে খসড়া, কেনা, ট্র্যাকিং ও লেবেল।',
             'status' => 'স্ট্যাটাস',

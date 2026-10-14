@@ -106,13 +106,13 @@ class RateQuoter
             return [];
         }
 
-        $body = $response->json();
+        $payload = $response->json('payload') ?? [];
 
-        if ($id = $body['shipment']['id'] ?? $body['id'] ?? null) {
+        if ($id = $payload['shipmentId'] ?? null) {
             Cache::forever(self::SHIPMENT_KEY, $id);
         }
 
-        return $this->normalize($body['shipment']['rates'] ?? $body['rates'] ?? []);
+        return $this->normalize($payload['rates'] ?? []);
     }
 
     /**
@@ -152,6 +152,8 @@ class RateQuoter
             'streetLine1' => trans('sendifico::app.shop.quote-street'),
             'territoryBaseId' => $territory,
             'country' => Client::COUNTRY,
+            'phone' => (string) (core()->getConfigData('sales.carriers.sendifico.quote_phone') ?: '0999999999'),
+            'email' => (string) (core()->getConfigData('sales.carriers.sendifico.quote_email') ?: config('mail.from.address')),
         ];
     }
 

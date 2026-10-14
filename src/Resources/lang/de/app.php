@@ -19,6 +19,10 @@ return [
         ],
 
         'config' => [
+            'quote-phone' => "Phone used when quoting",
+            'quote-phone-info' => "Couriers will not quote without a contact, so a store number stands in while only prices are being asked for.",
+            'quote-email' => "Email used when quoting",
+
             'page-title' => 'Sendifico',
             'page-info' => 'Versand über Ecuadors Multi-Carrier-Netzwerk: Pauschalversand im Checkout, Entwürfe aus Bestellungen, Kauf, Tracking und Etiketten.',
             'status' => 'Status',

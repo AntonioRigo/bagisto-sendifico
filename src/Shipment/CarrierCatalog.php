@@ -17,6 +17,7 @@ class CarrierCatalog
         'ec_gintracom' => ['name' => 'Gintracom', 'logo' => 'ec-gintracom-logo.png'],
         'ec_laar' => ['name' => 'Laar', 'logo' => 'ec-laar-logo.png'],
         'ec_servientrega' => ['name' => 'Servientrega', 'logo' => 'ec-servientrega-logo.jpg'],
+        'servientrega' => ['name' => 'Servientrega', 'logo' => 'ec-servientrega-logo.jpg'],
         'ec_enviexpress' => ['name' => 'Envíexpress', 'logo' => 'ec-enviexpress-logo.png'],
         'ec_delivereo' => ['name' => 'Delivereo', 'logo' => 'ec-delivereo-logo.png'],
     ];

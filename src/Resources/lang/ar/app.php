@@ -19,6 +19,10 @@ return [
         ],
 
         'config' => [
+            'quote-phone' => "Phone used when quoting",
+            'quote-phone-info' => "Couriers will not quote without a contact, so a store number stands in while only prices are being asked for.",
+            'quote-email' => "Email used when quoting",
+
             'page-title' => 'Sendifico',
             'page-info' => 'الشحن عبر شبكة النقل المتعددة في الإكوادور: تعرفة ثابتة عند الدفع، مسودات من الطلبات، شراء وتتبع وملصقات.',
             'status' => 'الحالة',

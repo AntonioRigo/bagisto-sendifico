@@ -19,6 +19,10 @@ return [
         ],
 
         'config' => [
+            'quote-phone' => "Phone used when quoting",
+            'quote-phone-info' => "Couriers will not quote without a contact, so a store number stands in while only prices are being asked for.",
+            'quote-email' => "Email used when quoting",
+
             'page-title' => 'Sendifico',
             'page-info' => 'इक्वाडोर के मल्टी-कैरियर नेटवर्क से भेजें: चेकआउट पर फ्लैट रेट, ऑर्डर से ड्राफ्ट, खरीद, ट्रैकिंग और लेबल।',
             'status' => 'स्थिति',

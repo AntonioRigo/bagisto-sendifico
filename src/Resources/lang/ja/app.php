@@ -19,6 +19,10 @@ return [
         ],
 
         'config' => [
+            'quote-phone' => "Phone used when quoting",
+            'quote-phone-info' => "Couriers will not quote without a contact, so a store number stands in while only prices are being asked for.",
+            'quote-email' => "Email used when quoting",
+
             'page-title' => 'Sendifico',
             'page-info' => 'エクアドルのマルチキャリア網で配送：チェックアウトの定額送料、注文からのドラフト作成、購入・追跡・ラベル。',
             'status' => 'ステータス',

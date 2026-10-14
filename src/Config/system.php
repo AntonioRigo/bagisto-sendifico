@@ -91,6 +91,21 @@ return [
                 'channel_based' => true,
                 'locale_based' => false,
             ], [
+                'name' => 'quote_phone',
+                'title' => 'sendifico::app.admin.config.quote-phone',
+                'info' => 'sendifico::app.admin.config.quote-phone-info',
+                'type' => 'text',
+                'depends' => 'live_rates:1',
+                'channel_based' => true,
+                'locale_based' => false,
+            ], [
+                'name' => 'quote_email',
+                'title' => 'sendifico::app.admin.config.quote-email',
+                'type' => 'text',
+                'depends' => 'live_rates:1',
+                'channel_based' => true,
+                'locale_based' => false,
+            ], [
                 'name' => 'quote_cache_hours',
                 'title' => 'sendifico::app.admin.config.quote-cache',
                 'info' => 'sendifico::app.admin.config.quote-cache-info',

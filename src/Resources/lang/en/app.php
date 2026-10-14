@@ -23,6 +23,10 @@ return [
         ],
 
         'config' => [
+            'quote-phone' => "Phone used when quoting",
+            'quote-phone-info' => "Couriers will not quote without a contact, so a store number stands in while only prices are being asked for.",
+            'quote-email' => "Email used when quoting",
+
             'live-rates' => 'Quote couriers live',
             'live-rates-info' => 'Ask Sendifico what each courier charges for the cart and let the customer choose one. Falls back to the rate above when a quote cannot be obtained.',
             'parcel-boxes' => 'Parcel sizes',

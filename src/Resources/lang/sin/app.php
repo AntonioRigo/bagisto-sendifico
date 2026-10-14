@@ -19,6 +19,10 @@ return [
         ],
 
         'config' => [
+            'quote-phone' => "Phone used when quoting",
+            'quote-phone-info' => "Couriers will not quote without a contact, so a store number stands in while only prices are being asked for.",
+            'quote-email' => "Email used when quoting",
+
             'page-title' => 'Sendifico',
             'page-info' => 'ඉක්වදෝරයේ බහු-බෙදාහරින්නන්ගේ ජාලය හරහා යවන්න: චෙක්අවුට්හි ස්ථාවර ගාස්තුව, ඇණවුම්වලින් කෙටුම්පත්, මිලදී ගැනීම, ලුහුබැඳීම සහ ලේබල.',
             'status' => 'තත්ත්වය',

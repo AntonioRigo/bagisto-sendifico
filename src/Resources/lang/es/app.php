@@ -23,6 +23,10 @@ return [
         ],
 
         'config' => [
+            'quote-phone' => "Teléfono para cotizar",
+            'quote-phone-info' => "Los couriers no cotizan sin un contacto, así que se usa un número de la tienda mientras solo se piden precios.",
+            'quote-email' => "Correo para cotizar",
+
             'live-rates' => 'Cotizar couriers en vivo',
             'live-rates-info' => 'Consulta a Sendifico cuánto cobra cada courier por el carrito y deja que el cliente elija. Si no se puede cotizar, se usa la tarifa de arriba.',
             'parcel-boxes' => 'Tamaños de paquete',
