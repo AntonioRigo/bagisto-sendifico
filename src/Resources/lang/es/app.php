@@ -23,6 +23,11 @@ return [
         ],
 
         'config' => [
+            'handling-fee' => "Cargo por manejo por pedido",
+            'handling-fee-info' => "Se suma una vez a cada opción de envío, sobre el precio del courier. Los carritos que solo llevan productos con envío gratis no pagan nada.",
+            'handling-fee-item' => "Cargo por manejo por ítem",
+            'handling-fee-item-info' => "Se suma por cada unidad enviada, sobre el precio del courier.",
+
             'quote-phone' => "Teléfono para cotizar",
             'quote-phone-info' => "Los couriers no cotizan sin un contacto, así que se usa un número de la tienda mientras solo se piden precios.",
             'quote-email' => "Correo para cotizar",

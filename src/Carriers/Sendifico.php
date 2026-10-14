@@ -41,7 +41,7 @@ class Sendifico extends AbstractShipping
 
         $isFree = $this->isFreeFor($cart);
 
-        $surcharge = $this->surchargeFor($cart);
+        $surcharge = $this->surchargeFor($cart) + $this->handlingFor($cart);
 
         if ($this->getConfigData('live_rates')) {
             $quotes = app(RateQuoter::class)->quote($cart);
@@ -105,6 +105,29 @@ class Sendifico extends AbstractShipping
         $cartShippingRate->base_price = $price;
 
         return $cartShippingRate;
+    }
+
+    /**
+     * What we charge for packing: a fee for the order and one for every unit
+     * shipped. Products that ship free are left out of both, so a cart holding
+     * only those still ships at no cost.
+     *
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
+     * @return float
+     */
+    protected function handlingFor($cart)
+    {
+        $items = $this->chargeableItems($cart);
+
+        if ($items->isEmpty()) {
+            return 0.0;
+        }
+
+        $perOrder = (float) $this->getConfigData('handling_fee');
+
+        $perItem = (float) $this->getConfigData('handling_fee_item') * (int) $items->sum('quantity');
+
+        return $perOrder + $perItem;
     }
 
     /**

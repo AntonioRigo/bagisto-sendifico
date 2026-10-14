@@ -19,6 +19,11 @@ return [
         ],
 
         'config' => [
+            'handling-fee' => "Handling fee per order",
+            'handling-fee-info' => "Added once to every shipping choice, on top of the courier price. Carts holding only free-shipping products pay nothing.",
+            'handling-fee-item' => "Handling fee per item",
+            'handling-fee-item-info' => "Added for every unit shipped, on top of the courier price.",
+
             'quote-phone' => "Phone used when quoting",
             'quote-phone-info' => "Couriers will not quote without a contact, so a store number stands in while only prices are being asked for.",
             'quote-email' => "Email used when quoting",
