@@ -3,6 +3,7 @@
 namespace Tapstar\Sendifico\Carriers;
 
 use Illuminate\Support\Collection;
+use Tapstar\Sendifico\Services\RateQuoter;
 use Tapstar\Sendifico\Territory\TerritoryMatcher;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Checkout\Models\CartShippingRate;
@@ -38,17 +39,70 @@ class Sendifico extends AbstractShipping
 
         $cart = Cart::getCart();
 
-        $baseRate = ($this->isFreeFor($cart) ? 0.0 : $this->rateFor($cart)) + $this->surchargeFor($cart);
+        $isFree = $this->isFreeFor($cart);
 
+        $surcharge = $this->surchargeFor($cart);
+
+        if ($this->getConfigData('live_rates')) {
+            $quotes = app(RateQuoter::class)->quote($cart);
+
+            if (! empty($quotes)) {
+                return array_map(fn ($quote) => $this->quotedRate($quote, $isFree, $surcharge), $quotes);
+            }
+        }
+
+        $baseRate = ($isFree ? 0.0 : $this->rateFor($cart)) + $surcharge;
+
+        return $this->rate(
+            $this->getMethod(),
+            $this->getConfigData('title'),
+            $this->getConfigData('description'),
+            $baseRate
+        );
+    }
+
+    /**
+     * One courier's live quote, offered as its own choice at checkout. A cart
+     * that ships free still picks a courier, it just pays nothing for it; the
+     * destination surcharge is added either way.
+     *
+     * @param  array<string, mixed>  $quote
+     * @return CartShippingRate
+     */
+    protected function quotedRate(array $quote, bool $isFree, float $surcharge)
+    {
+        $price = ($isFree ? 0.0 : (float) $quote['price']) + $surcharge;
+
+        $rate = $this->rate(
+            $this->getCode().'_'.$quote['token'],
+            $quote['name'],
+            $quote['days'] > 0
+                ? trans('sendifico::app.shop.estimate-days', ['days' => $quote['days']])
+                : $this->getConfigData('description'),
+            $price
+        );
+
+        $rate->carrier_title = $quote['name'];
+
+        return $rate;
+    }
+
+    /**
+     * Build a rate row for the cart.
+     *
+     * @return CartShippingRate
+     */
+    protected function rate(string $method, ?string $title, ?string $description, float $price)
+    {
         $cartShippingRate = new CartShippingRate;
 
         $cartShippingRate->carrier = $this->getCode();
         $cartShippingRate->carrier_title = $this->getConfigData('title');
-        $cartShippingRate->method = $this->getMethod();
-        $cartShippingRate->method_title = $this->getConfigData('title');
-        $cartShippingRate->method_description = $this->getConfigData('description');
-        $cartShippingRate->price = core()->convertPrice($baseRate);
-        $cartShippingRate->base_price = $baseRate;
+        $cartShippingRate->method = $method;
+        $cartShippingRate->method_title = $title;
+        $cartShippingRate->method_description = $description;
+        $cartShippingRate->price = core()->convertPrice($price);
+        $cartShippingRate->base_price = $price;
 
         return $cartShippingRate;
     }

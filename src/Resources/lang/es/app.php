@@ -5,6 +5,10 @@ return [
         'sendifico' => 'Envíos Sendifico',
     ],
     'shop' => [
+            'estimate-days' => 'Entrega estimada en :days días',
+            'quote-recipient' => 'Cotización',
+            'quote-street' => 'Cotización',
+
         'canton' => 'Cantón',
         'invalid-vat-id' => 'Ingresa una cédula (10 dígitos) o un RUC (13 dígitos) válido.',
         'province' => 'Provincia',
@@ -19,6 +23,13 @@ return [
         ],
 
         'config' => [
+            'live-rates' => 'Cotizar couriers en vivo',
+            'live-rates-info' => 'Consulta a Sendifico cuánto cobra cada courier por el carrito y deja que el cliente elija. Si no se puede cotizar, se usa la tarifa de arriba.',
+            'parcel-boxes' => 'Tamaños de paquete',
+            'parcel-boxes-info' => 'Un rango por línea, como "kilos máximos: largo x ancho x alto" en centímetros, por ejemplo "5: 35x30x20".',
+            'quote-cache' => 'Guardar la cotización (horas)',
+            'quote-cache-info' => 'Cuánto tiempo el mismo destino y paquete reutilizan su respuesta antes de volver a consultar.',
+
             'page-title' => 'Sendifico',
             'page-info' => 'Envía con la red multicourier de Ecuador: tarifa plana en el checkout, borradores desde los pedidos, compra, tracking y etiquetas.',
             'status' => 'Estado',

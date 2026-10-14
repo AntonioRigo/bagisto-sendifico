@@ -5,6 +5,10 @@ return [
         'sendifico' => 'Sendifico shipments',
     ],
     'shop' => [
+            'estimate-days' => 'Estimated delivery in :days days',
+            'quote-recipient' => 'Rate quote',
+            'quote-street' => 'Rate quote',
+
         'canton' => 'Canton',
         'invalid-vat-id' => 'Enter a valid cédula (10 digits) or RUC (13 digits).',
         'province' => 'Province',
@@ -19,6 +23,13 @@ return [
         ],
 
         'config' => [
+            'live-rates' => 'Quote couriers live',
+            'live-rates-info' => 'Ask Sendifico what each courier charges for the cart and let the customer choose one. Falls back to the rate above when a quote cannot be obtained.',
+            'parcel-boxes' => 'Parcel sizes',
+            'parcel-boxes-info' => 'One bracket per line, as "max kilos: length x width x height" in centimetres, for example "5: 35x30x20".',
+            'quote-cache' => 'Keep a quote for (hours)',
+            'quote-cache-info' => 'How long the same destination and parcel reuse their answer before asking again.',
+
             'page-title' => 'Sendifico',
             'page-info' => 'Ship with Ecuador\'s multi-carrier network: flat-rate checkout shipping, drafts from orders, purchase, tracking and labels.',
             'status' => 'Status',
