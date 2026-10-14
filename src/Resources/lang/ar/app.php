@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'حفظ الطرد وتسعيره',
             'purchase' => 'شراء الشحنة',
-            'estimate-days' => '{1} :days يوم|[2,*] :days أيام',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'إنشاء رقم التتبع',
             'tracking-hint' => 'أنشئه يوم الإرسال: بعض الناقلين يلغون أرقام التتبع الخاملة لأكثر من يوم أو يومين.',
             'label' => 'ملصق PDF',

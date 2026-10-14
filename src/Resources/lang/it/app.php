@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Salva pacco e quota',
             'purchase' => 'Acquista spedizione',
-            'estimate-days' => '{1} :days giorno|[2,*] :days giorni',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'Genera numero di tracking',
             'tracking-hint' => 'Generalo il giorno della spedizione: alcuni corrieri annullano i tracking inattivi da più di uno o due giorni.',
             'label' => 'Etichetta PDF',

@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'पैकेज सहेजें और दरें पाएं',
             'purchase' => 'शिपमेंट खरीदें',
-            'estimate-days' => '{1} :days दिन|[2,*] :days दिन',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'ट्रैकिंग नंबर बनाएं',
             'tracking-hint' => 'भेजने के दिन बनाएं: कुछ कैरियर एक-दो दिन से अधिक निष्क्रिय ट्रैकिंग नंबर रद्द कर देते हैं।',
             'label' => 'लेबल PDF',

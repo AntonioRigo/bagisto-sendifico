@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'ذخیره بسته و استعلام نرخ',
             'purchase' => 'خرید مرسوله',
-            'estimate-days' => '{1} :days روز|[2,*] :days روز',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'ایجاد شماره رهگیری',
             'tracking-hint' => 'آن را روز ارسال بسازید: برخی شرکت‌ها شماره رهگیری بی‌استفاده بیش از یکی دو روز را باطل می‌کنند.',
             'label' => 'برچسب PDF',

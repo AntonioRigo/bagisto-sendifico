@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Salvează coletul și cotează',
             'purchase' => 'Cumpără expedierea',
-            'estimate-days' => '{1} :days zi|[2,*] :days zile',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'Generează numărul de urmărire',
             'tracking-hint' => 'Generează-l în ziua expedierii: unii curieri anulează numerele inactive mai mult de una-două zile.',
             'label' => 'Etichetă PDF',

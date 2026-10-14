@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Salvar pacote e cotar',
             'purchase' => 'Comprar envio',
-            'estimate-days' => '{1} :days dia|[2,*] :days dias',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'Gerar número de rastreamento',
             'tracking-hint' => 'Gere no dia do despacho: algumas transportadoras anulam rastreamentos inativos por mais de um ou dois dias.',
             'label' => 'Etiqueta PDF',

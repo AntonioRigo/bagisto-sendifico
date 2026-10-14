@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Paketi kaydet ve fiyat al',
             'purchase' => 'Gönderiyi satın al',
-            'estimate-days' => '{1} :days gün|[2,*] :days gün',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'Takip numarası oluştur',
             'tracking-hint' => 'Sevkiyat günü oluşturun: bazı kargolar bir-iki günden uzun süredir kullanılmayan takip numaralarını iptal eder.',
             'label' => 'Etiket PDF',

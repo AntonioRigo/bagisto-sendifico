@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Сохранить посылку и получить тарифы',
             'purchase' => 'Купить отправление',
-            'estimate-days' => '{1} :days день|[2,*] :days дн.',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'Создать трек-номер',
             'tracking-hint' => 'Создавайте его в день отгрузки: некоторые курьеры аннулируют трек-номера, простаивающие больше одного-двух дней.',
             'label' => 'Этикетка PDF',

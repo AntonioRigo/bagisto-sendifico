@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Desar paquet i cotitzar',
             'purchase' => 'Comprar enviament',
-            'estimate-days' => '{1} :days dia|[2,*] :days dies',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'Generar número de seguiment',
             'tracking-hint' => 'Genera’l el dia del despatx: alguns transportistes anul·len els seguiments inactius més d’un o dos dies.',
             'label' => 'Etiqueta PDF',

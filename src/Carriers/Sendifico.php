@@ -77,7 +77,7 @@ class Sendifico extends AbstractShipping
             $this->getCode().'_'.$quote['token'],
             $quote['name'],
             $quote['days'] > 0
-                ? trans('sendifico::app.shop.estimate-days', ['days' => $quote['days']])
+                ? trans_choice('sendifico::app.shop.estimate-days', $quote['days'], ['days' => $quote['days']])
                 : $this->getConfigData('description'),
             $price
         );

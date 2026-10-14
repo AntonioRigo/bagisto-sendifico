@@ -31,8 +31,10 @@ class RateQuoter
 
     /**
      * What every courier would charge to carry this cart, as the storefront
-     * shows them: name, logo, estimated days and price. The quote never turns
-     * into a real shipment; one draft is reused and re-quoted for all of them.
+     * shows them: name, logo, estimated days and price. The price is their
+     * subtotal, because their total already carries IVA and the checkout adds
+     * it once more. The quote never turns into a real shipment; one draft is
+     * reused and re-quoted for all of them.
      *
      * @param  \Webkul\Checkout\Contracts\Cart  $cart
      * @return array<int, array<string, mixed>>
@@ -219,7 +221,8 @@ class RateQuoter
                 'name' => CarrierCatalog::name($rate['carrierToken']),
                 'logo' => CarrierCatalog::logo($rate['carrierToken']),
                 'days' => (int) ($rate['estimateDays'] ?? 0),
-                'price' => (float) ($rate['priceTotal'] ?? 0),
+                'price' => (float) ($rate['priceSubtotal'] ?? $rate['priceTotal'] ?? 0),
+                'price_with_tax' => (float) ($rate['priceTotal'] ?? 0),
                 'rate_id' => $rate['rateId'] ?? null,
             ])
             ->sortBy('price')

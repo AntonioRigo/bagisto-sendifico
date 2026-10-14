@@ -100,7 +100,7 @@ return [
             ],
             'quote' => '保存包裹并询价',
             'purchase' => '购买货运',
-            'estimate-days' => '{1} :days 天|[2,*] :days 天',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => '生成跟踪号',
             'tracking-hint' => '请在发货当天生成：部分承运商会作废闲置超过一两天的跟踪号。',
             'label' => '面单 PDF',

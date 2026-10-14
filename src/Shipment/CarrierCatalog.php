@@ -23,12 +23,14 @@ class CarrierCatalog
     ];
 
     /**
-     * The courier's name, falling back to a readable form of its token.
+     * The courier's name in the capitals the storefront shows, falling back to
+     * a readable form of its token.
      */
     public static function name(string $token): string
     {
-        return self::CARRIERS[$token]['name']
-            ?? ucwords(str_replace(['ec_', '_'], ['', ' '], $token));
+        return mb_strtoupper(
+            self::CARRIERS[$token]['name'] ?? str_replace(['ec_', '_'], ['', ' '], $token)
+        );
     }
 
     /**

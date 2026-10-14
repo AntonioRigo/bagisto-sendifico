@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Zapisz paczkę i wyceń',
             'purchase' => 'Kup przesyłkę',
-            'estimate-days' => '{1} :days dzień|[2,*] :days dni',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'Wygeneruj numer śledzenia',
             'tracking-hint' => 'Generuj go w dniu nadania: niektórzy przewoźnicy anulują numery nieaktywne dłużej niż dzień lub dwa.',
             'label' => 'Etykieta PDF',

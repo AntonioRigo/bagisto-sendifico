@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'שמירת חבילה וקבלת מחירים',
             'purchase' => 'רכישת המשלוח',
-            'estimate-days' => '{1} :days יום|[2,*] :days ימים',
+            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
             'generate-tracking' => 'יצירת מספר מעקב',
             'tracking-hint' => 'צרו אותו ביום השילוח: חלק מהמובילים מבטלים מספרי מעקב שאינם פעילים יותר מיום-יומיים.',
             'label' => 'תווית PDF',
