@@ -41,8 +41,6 @@ return [
             'rate-mode-item' => 'බෙදාහරින ඒකකයකට',
             'free-threshold' => 'නොමිලේ බෙදාහැරීම (USD) සිට',
             'free-threshold-info' => 'උප එකතුව මෙම මුදලට ළඟා වන ඇණවුම් නොමිලේ යැවේ. අක්‍රිය කිරීමට 0 තබන්න.',
-            'province-surcharges' => 'පළාත් අනුව අමතර ගාස්තු',
-            'province-surcharges-info' => 'එක් එක් පළාතට පේළියක් බැගින් USD අමතර ගාස්තුව දක්වන්න, උදා: GALAPAGOS: 10. බෙදාහැරීම නොමිලේ වුවද මෙය එකතු වේ.',
             'api-key' => 'API යතුර',
             'api-key-info' => 'app.sendifico.com/integrations හිදී සාදන්න. එය ඔබේ පසුම්බියෙන් වියදම් කළ හැක; ගෙවීම් අක්තපත්‍රයක් සේ රැකගන්න.',
             'sender-address-id' => 'යවන්නාගේ ලිපින ID',

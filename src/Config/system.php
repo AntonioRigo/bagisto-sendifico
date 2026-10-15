@@ -133,14 +133,6 @@ return [
                 'channel_based' => true,
                 'locale_based' => false,
             ], [
-                'name' => 'province_surcharges',
-                'title' => 'sendifico::app.admin.config.province-surcharges',
-                'info' => 'sendifico::app.admin.config.province-surcharges-info',
-                'type' => 'textarea',
-                'depends' => 'active:1',
-                'channel_based' => true,
-                'locale_based' => false,
-            ], [
                 'name' => 'api_key',
                 'title' => 'sendifico::app.admin.config.api-key',
                 'info' => 'sendifico::app.admin.config.api-key-info',

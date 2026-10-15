@@ -41,8 +41,6 @@ return [
             'rate-mode-item' => 'Par unité expédiée',
             'free-threshold' => 'Livraison gratuite dès (USD)',
             'free-threshold-info' => 'Les commandes dont le sous-total atteint ce montant sont livrées gratuitement. Laissez 0 pour désactiver.',
-            'province-surcharges' => 'Suppléments par province',
-            'province-surcharges-info' => 'Une ligne par province avec son supplément en USD, par exemple GALAPAGOS: 10. Il s’ajoute aux frais de livraison même lorsque la livraison est gratuite.',
             'api-key' => 'Clé API',
             'api-key-info' => 'Créez-la sur app.sendifico.com/integrations. Elle peut dépenser votre wallet : traitez-la comme un identifiant de paiement.',
             'sender-address-id' => 'ID de l’adresse d’expédition',

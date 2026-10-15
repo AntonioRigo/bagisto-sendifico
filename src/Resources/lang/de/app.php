@@ -41,8 +41,6 @@ return [
             'rate-mode-item' => 'Pro versandter Einheit',
             'free-threshold' => 'Versandkostenfrei ab (USD)',
             'free-threshold-info' => 'Bestellungen, deren Zwischensumme diesen Betrag erreicht, versenden kostenlos. 0 zum Deaktivieren.',
-            'province-surcharges' => 'Zuschläge nach Provinz',
-            'province-surcharges-info' => 'Eine Zeile pro Provinz mit dem Zuschlag in USD, zum Beispiel GALAPAGOS: 10. Er wird auch berechnet, wenn der Versand sonst kostenlos ist.',
             'api-key' => 'API-Schlüssel',
             'api-key-info' => 'Unter app.sendifico.com/integrations erstellen. Er kann Ihr Wallet belasten – wie eine Zahlungs-Credential behandeln.',
             'sender-address-id' => 'Absenderadressen-ID',

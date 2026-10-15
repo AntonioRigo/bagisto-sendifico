@@ -52,8 +52,6 @@ return [
             'rate-mode-item' => 'Per unit shipped',
             'free-threshold' => 'Free shipping from (USD)',
             'free-threshold-info' => 'Orders whose subtotal reaches this amount ship free. Leave 0 to disable.',
-            'province-surcharges' => 'Province surcharges',
-            'province-surcharges-info' => 'One line per province with its surcharge in USD, for example GALAPAGOS: 10. It is added to the shipping charge even when shipping is otherwise free.',
             'api-key' => 'API key',
             'api-key-info' => 'Create one at app.sendifico.com/integrations. It can spend your wallet, treat it like a payment credential.',
             'sender-address-id' => 'Sender address ID',

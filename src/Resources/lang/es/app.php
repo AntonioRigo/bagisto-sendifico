@@ -52,8 +52,6 @@ return [
             'rate-mode-item' => 'Por unidad enviada',
             'free-threshold' => 'Envío gratis desde (USD)',
             'free-threshold-info' => 'Los pedidos cuyo subtotal alcance este monto tienen envío gratis. Deja 0 para desactivarlo.',
-            'province-surcharges' => 'Recargos por provincia',
-            'province-surcharges-info' => 'Una línea por provincia con su recargo en USD, por ejemplo GALAPAGOS: 10. Se suma al envío incluso cuando el envío es gratis.',
             'api-key' => 'API key',
             'api-key-info' => 'Créala en app.sendifico.com/integrations. Puede gastar tu wallet: trátala como una credencial de pago.',
             'sender-address-id' => 'ID de dirección de origen',

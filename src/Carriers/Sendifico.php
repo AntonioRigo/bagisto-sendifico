@@ -4,7 +4,6 @@ namespace Tapstar\Sendifico\Carriers;
 
 use Illuminate\Support\Collection;
 use Tapstar\Sendifico\Services\RateQuoter;
-use Tapstar\Sendifico\Territory\TerritoryMatcher;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Checkout\Models\CartShippingRate;
 use Webkul\Shipping\Carriers\AbstractShipping;
@@ -41,17 +40,17 @@ class Sendifico extends AbstractShipping
 
         $isFree = $this->isFreeFor($cart);
 
-        $surcharge = $this->surchargeFor($cart) + $this->handlingFor($cart);
+        $handling = $this->handlingFor($cart);
 
         if ($this->getConfigData('live_rates')) {
             $quotes = app(RateQuoter::class)->quote($cart);
 
-            if (! empty($quotes)) {
-                return array_map(fn ($quote) => $this->quotedRate($quote, $isFree, $surcharge), $quotes);
+            if (is_array($quotes)) {
+                return array_map(fn ($quote) => $this->quotedRate($quote, $isFree, $handling), $quotes);
             }
         }
 
-        $baseRate = ($isFree ? 0.0 : $this->rateFor($cart)) + $surcharge;
+        $baseRate = ($isFree ? 0.0 : $this->rateFor($cart)) + $handling;
 
         return $this->rate(
             $this->getMethod(),
@@ -69,9 +68,9 @@ class Sendifico extends AbstractShipping
      * @param  array<string, mixed>  $quote
      * @return CartShippingRate
      */
-    protected function quotedRate(array $quote, bool $isFree, float $surcharge)
+    protected function quotedRate(array $quote, bool $isFree, float $handling)
     {
-        $price = ($isFree ? 0.0 : (float) $quote['price']) + $surcharge;
+        $price = ($isFree ? 0.0 : (float) $quote['price']) + $handling;
 
         $rate = $this->rate(
             $this->getCode().'_'.$quote['token'],
@@ -168,33 +167,6 @@ class Sendifico extends AbstractShipping
             ->reject(fn ($item) => (bool) $item->product?->free_shipping);
     }
 
-    /**
-     * The surcharge configured for the province of the shipping address, one "PROVINCE: amount" per line.
-     *
-     * @param  \Webkul\Checkout\Contracts\Cart  $cart
-     * @return float
-     */
-    protected function surchargeFor($cart)
-    {
-        $province = TerritoryMatcher::normalize($cart->shipping_address?->state);
-
-        if (! $province) {
-            return 0.0;
-        }
-
-        foreach (preg_split('/\R/', (string) $this->getConfigData('province_surcharges')) as $line) {
-            [$name, $amount] = array_pad(explode(':', $line, 2), 2, '');
-
-            if (
-                is_numeric(trim($amount))
-                && TerritoryMatcher::normalize($name) === $province
-            ) {
-                return (float) trim($amount);
-            }
-        }
-
-        return 0.0;
-    }
 
     /**
      * Check whether the cart's subtotal clears the free-shipping threshold.

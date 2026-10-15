@@ -36,19 +36,22 @@ class RateQuoter
      * it once more. The quote never turns into a real shipment; one draft is
      * reused and re-quoted for all of them.
      *
+     * An empty list means the couriers answered and none of them serves the
+     * destination; null means we could not ask at all.
+     *
      * @param  \Webkul\Checkout\Contracts\Cart  $cart
-     * @return array<int, array<string, mixed>>
+     * @return array<int, array<string, mixed>>|null
      */
-    public function quote($cart): array
+    public function quote($cart): ?array
     {
         if (! $this->client->hasApiKey()) {
-            return [];
+            return null;
         }
 
         $address = $cart->shipping_address;
 
         if (! $address) {
-            return [];
+            return null;
         }
 
         $this->territoryService->refreshIfStale();
@@ -67,18 +70,28 @@ class RateQuoter
 
         $hours = (int) (core()->getConfigData('sales.carriers.sendifico.quote_cache_hours') ?: self::DEFAULT_CACHE_HOURS);
 
-        return Cache::remember($key, now()->addHours(max($hours, 1)), function () use ($territory, $weight, $box) {
-            return Cache::lock('sendifico.quote.lock', 30)->block(20, fn () => $this->fetch($territory, $weight, $box));
-        });
+        $rates = Cache::get($key);
+
+        if ($rates !== null) {
+            return $rates;
+        }
+
+        $rates = Cache::lock('sendifico.quote.lock', 30)->block(20, fn () => $this->fetch($territory, $weight, $box));
+
+        if ($rates !== null) {
+            Cache::put($key, $rates, now()->addHours(max($hours, 1)));
+        }
+
+        return $rates;
     }
 
     /**
      * Ask Sendifico, reusing the quoting draft when there is one.
      *
      * @param  array<int, float>  $box
-     * @return array<int, array<string, mixed>>
+     * @return array<int, array<string, mixed>>|null
      */
-    protected function fetch(string $territory, float $weight, array $box): array
+    protected function fetch(string $territory, float $weight, array $box): ?array
     {
         $parcel = [
             'weight' => $weight,
@@ -99,13 +112,13 @@ class RateQuoter
         } catch (\Exception $e) {
             report($e);
 
-            return [];
+            return null;
         }
 
         if (! $response->successful()) {
             Cache::forget(self::SHIPMENT_KEY);
 
-            return [];
+            return null;
         }
 
         $payload = $response->json('payload') ?? [];

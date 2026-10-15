@@ -41,8 +41,6 @@ return [
             'rate-mode-item' => 'প্রতি পাঠানো ইউনিট',
             'free-threshold' => 'ফ্রি শিপিং শুরু (USD)',
             'free-threshold-info' => 'যে অর্ডারের সাবটোটাল এই পরিমাণে পৌঁছায় সেগুলোর শিপিং ফ্রি। বন্ধ করতে 0 রাখুন।',
-            'province-surcharges' => 'প্রদেশভিত্তিক অতিরিক্ত চার্জ',
-            'province-surcharges-info' => 'প্রতিটি প্রদেশের জন্য এক লাইনে USD-তে অতিরিক্ত চার্জ লিখুন, যেমন GALAPAGOS: 10। শিপিং বিনামূল্যে হলেও এটি যোগ হয়।',
             'api-key' => 'API কী',
             'api-key-info' => 'app.sendifico.com/integrations-এ তৈরি করুন। এটি আপনার ওয়ালেট থেকে খরচ করতে পারে; পেমেন্ট credential-এর মতো সামলান।',
             'sender-address-id' => 'প্রেরকের ঠিকানা ID',

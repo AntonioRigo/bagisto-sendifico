@@ -41,8 +41,6 @@ return [
             'rate-mode-item' => 'Per unit yang dikirim',
             'free-threshold' => 'Gratis ongkir mulai (USD)',
             'free-threshold-info' => 'Pesanan yang subtotalnya mencapai jumlah ini dikirim gratis. Isi 0 untuk menonaktifkan.',
-            'province-surcharges' => 'Biaya tambahan per provinsi',
-            'province-surcharges-info' => 'Satu baris per provinsi dengan biaya tambahannya dalam USD, misalnya GALAPAGOS: 10. Biaya ini tetap ditambahkan meskipun pengiriman gratis.',
             'api-key' => 'Kunci API',
             'api-key-info' => 'Buat di app.sendifico.com/integrations. Kunci ini bisa membelanjakan wallet Anda; perlakukan seperti kredensial pembayaran.',
             'sender-address-id' => 'ID alamat pengirim',

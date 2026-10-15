@@ -41,8 +41,6 @@ return [
             'rate-mode-item' => 'Per verzonden eenheid',
             'free-threshold' => 'Gratis verzending vanaf (USD)',
             'free-threshold-info' => 'Bestellingen waarvan het subtotaal dit bedrag haalt, verzenden gratis. Laat 0 staan om uit te schakelen.',
-            'province-surcharges' => 'Toeslagen per provincie',
-            'province-surcharges-info' => 'Eén regel per provincie met de toeslag in USD, bijvoorbeeld GALAPAGOS: 10. De toeslag geldt ook als de verzending verder gratis is.',
             'api-key' => 'API-sleutel',
             'api-key-info' => 'Maak hem aan op app.sendifico.com/integrations. Hij kan je wallet uitgeven: behandel hem als een betaalcredential.',
             'sender-address-id' => 'ID afzenderadres',

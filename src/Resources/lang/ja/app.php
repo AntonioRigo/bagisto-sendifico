@@ -41,8 +41,6 @@ return [
             'rate-mode-item' => '配送1点ごと',
             'free-threshold' => '送料無料の下限（USD）',
             'free-threshold-info' => '小計がこの金額に達した注文は送料無料になります。無効にするには0のままにします。',
-            'province-surcharges' => '州ごとの追加料金',
-            'province-surcharges-info' => '州ごとに 1 行ずつ USD の追加料金を入力します(例: GALAPAGOS: 10)。送料無料の場合も送料に加算されます。',
             'api-key' => 'APIキー',
             'api-key-info' => 'app.sendifico.com/integrations で作成します。ウォレットから支払いが可能なため、決済情報と同様に扱ってください。',
             'sender-address-id' => '差出人住所ID',

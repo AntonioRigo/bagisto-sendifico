@@ -41,8 +41,6 @@ return [
             'rate-mode-item' => 'Per unità spedita',
             'free-threshold' => 'Spedizione gratuita da (USD)',
             'free-threshold-info' => 'Gli ordini il cui subtotale raggiunge questo importo viaggiano gratis. Lascia 0 per disattivare.',
-            'province-surcharges' => 'Supplementi per provincia',
-            'province-surcharges-info' => 'Una riga per provincia con il supplemento in USD, per esempio GALAPAGOS: 10. Si aggiunge alla spedizione anche quando la spedizione è gratuita.',
             'api-key' => 'Chiave API',
             'api-key-info' => 'Creala su app.sendifico.com/integrations. Può spendere dal tuo wallet: trattala come una credenziale di pagamento.',
             'sender-address-id' => 'ID indirizzo mittente',
