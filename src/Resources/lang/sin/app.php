@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'පාර්සලය සුරකින්න සහ මිල ගන්න',
             'purchase' => 'බෙදාහැරීම මිලදී ගන්න',
-            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
+            "estimate-days" => "{1} 1 day|[2,*] :days days",
             'generate-tracking' => 'ලුහුබැඳීමේ අංකය සාදන්න',
             'tracking-hint' => 'යවන දිනයේම සාදන්න: සමහර බෙදාහරින්නෝ දින එක-දෙකකට වඩා අක්‍රිය ලුහුබැඳීමේ අංක අවලංගු කරති.',
             'label' => 'ලේබල් PDF',

@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Enregistrer le colis et coter',
             'purchase' => 'Acheter l’expédition',
-            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
+            "estimate-days" => "{1} 1 day|[2,*] :days days",
             'generate-tracking' => 'Générer le numéro de suivi',
             'tracking-hint' => 'Générez-le le jour de l’envoi : certains transporteurs annulent les suivis inactifs plus d’un ou deux jours.',
             'label' => 'Étiquette PDF',

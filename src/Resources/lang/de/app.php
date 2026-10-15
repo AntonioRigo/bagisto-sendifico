@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Paket speichern & Tarife holen',
             'purchase' => 'Sendung kaufen',
-            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
+            "estimate-days" => "{1} 1 day|[2,*] :days days",
             'generate-tracking' => 'Trackingnummer erzeugen',
             'tracking-hint' => 'Am Versandtag erzeugen: manche Carrier annullieren Trackingnummern, die länger als ein bis zwei Tage ungenutzt sind.',
             'label' => 'Etikett-PDF',

@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Pakket opslaan & tarieven ophalen',
             'purchase' => 'Zending kopen',
-            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
+            "estimate-days" => "{1} 1 day|[2,*] :days days",
             'generate-tracking' => 'Trackingnummer genereren',
             'tracking-hint' => 'Genereer het op de verzenddag: sommige vervoerders annuleren trackingnummers die langer dan een of twee dagen ongebruikt zijn.',
             'label' => 'Label-PDF',

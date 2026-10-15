@@ -100,7 +100,7 @@ return [
             ],
             'quote' => '荷物を保存して見積もる',
             'purchase' => '配送を購入',
-            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
+            "estimate-days" => "{1} 1 day|[2,*] :days days",
             'generate-tracking' => '追跡番号を発行',
             'tracking-hint' => '発送当日に発行してください。1〜2日以上未使用の追跡番号を取り消すキャリアがあります。',
             'label' => 'ラベルPDF',

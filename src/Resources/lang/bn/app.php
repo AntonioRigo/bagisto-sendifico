@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'প্যাকেজ সংরক্ষণ ও কোট করুন',
             'purchase' => 'শিপমেন্ট কিনুন',
-            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
+            "estimate-days" => "{1} 1 day|[2,*] :days days",
             'generate-tracking' => 'ট্র্যাকিং নম্বর তৈরি করুন',
             'tracking-hint' => 'পাঠানোর দিনে তৈরি করুন: কিছু ক্যারিয়ার এক-দুই দিনের বেশি নিষ্ক্রিয় ট্র্যাকিং নম্বর বাতিল করে।',
             'label' => 'লেবেল PDF',

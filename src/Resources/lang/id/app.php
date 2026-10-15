@@ -100,7 +100,7 @@ return [
             ],
             'quote' => 'Simpan paket & minta tarif',
             'purchase' => 'Beli pengiriman',
-            "estimate-days" => "{1} Estimated delivery in one day|[2,*] Estimated delivery in :days days",
+            "estimate-days" => "{1} 1 day|[2,*] :days days",
             'generate-tracking' => 'Buat nomor pelacakan',
             'tracking-hint' => 'Buat pada hari pengiriman: beberapa kurir membatalkan nomor pelacakan yang menganggur lebih dari satu-dua hari.',
             'label' => 'Label PDF',

@@ -5,7 +5,7 @@ return [
         'sendifico' => 'Envíos Sendifico',
     ],
     'shop' => [
-            "estimate-days" => "{1} Entrega estimada en un día|[2,*] Entrega estimada en :days días",
+            "estimate-days" => "{1} 1 día|[2,*] :days días",
             'quote-recipient' => 'Cotización',
             'quote-street' => 'Cotización',
 
