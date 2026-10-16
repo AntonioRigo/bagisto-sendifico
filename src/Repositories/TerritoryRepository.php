@@ -2,6 +2,8 @@
 
 namespace Tapstar\Sendifico\Repositories;
 
+use Tapstar\Sendifico\Territory\TerritoryMatcher;
+use Tapstar\Sendifico\Territory\TerritoryNames;
 use Webkul\Core\Eloquent\Repository;
 
 class TerritoryRepository extends Repository
@@ -69,23 +71,32 @@ class TerritoryRepository extends Repository
     /**
      * Get the country's territories as a province tree, for the checkout selectors.
      *
-     * Provinces and their cantons are what an address needs, so parishes collapse
-     * into their canton and each canton appears once.
+     * Provinces and their cantones are what an address needs, so parroquias
+     * collapse into their cantón and each cantón appears once, under the name a
+     * customer would recognise rather than the catalog's shouted spelling.
      */
     public function provinceTree(string $country): array
     {
         $tree = [];
 
         foreach ($this->allForCountry($country) as $territory) {
-            $tree[$territory->territory1_name][$territory->territory2_name] = true;
+            $province = TerritoryNames::province($territory->territory1_name);
+
+            $canton = TerritoryNames::canton($territory->territory2_name, $territory->territory3_name);
+
+            $key = TerritoryMatcher::normalize($canton);
+
+            if (! isset($tree[$province][$key]) || TerritoryNames::isAccented($canton)) {
+                $tree[$province][$key] = $canton;
+            }
         }
 
-        ksort($tree);
+        uksort($tree, fn ($a, $b) => strcmp(TerritoryMatcher::normalize($a), TerritoryMatcher::normalize($b)));
 
         return array_map(function (array $cantons) {
-            $names = array_keys($cantons);
+            $names = array_values($cantons);
 
-            sort($names);
+            usort($names, fn ($a, $b) => strcmp(TerritoryMatcher::normalize($a), TerritoryMatcher::normalize($b)));
 
             return $names;
         }, $tree);

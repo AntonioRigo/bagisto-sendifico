@@ -356,8 +356,35 @@
                     this.$axios.get("{{ route('shop.sendifico.territories') }}")
                         .then(response => {
                             this.territories = response.data.data;
+
+                            this.selectedProvince = this.catalogued(this.provinces, this.selectedProvince);
+
+                            this.selectedCanton = this.catalogued(this.cantons, this.selectedCanton);
                         })
                         .catch(() => {});
+                },
+
+                /**
+                 * The catalog's spelling of a saved address, so one written
+                 * before the selectors read the way they do now still shows the
+                 * province and cantón the customer chose.
+                 */
+                catalogued(options, value) {
+                    const wanted = this.plain(value);
+
+                    return options.find(option => this.plain(option) === wanted) ?? value;
+                },
+
+                /**
+                 * A name stripped of accents, case and punctuation, for comparing.
+                 */
+                plain(value) {
+                    return (value ?? '')
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, ' ')
+                        .trim();
                 },
             }
         });

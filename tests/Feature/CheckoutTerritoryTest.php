@@ -19,11 +19,11 @@ it('serves the province tree to the checkout address form', function () {
 
     $tree = $response->json('data');
 
-    expect($tree)->toHaveKeys(['GUAYAS', 'PICHINCHA']);
+    expect($tree)->toHaveKeys(['Guayas', 'Pichincha']);
 
-    expect($tree['PICHINCHA'])->toBe(['QUITO']);
+    expect($tree['Pichincha'])->toBe(['Quito']);
 
-    expect($tree['GUAYAS'])->toBe(['GUAYAQUIL']);
+    expect($tree['Guayas'])->toBe(['Guayaquil']);
 });
 
 it('collapses the parishes of a canton into a single entry', function () {
@@ -31,7 +31,23 @@ it('collapses the parishes of a canton into a single entry', function () {
     $tree = app(TerritoryRepository::class)->provinceTree('EC');
 
     // Assert
-    expect($tree['PICHINCHA'])->toBe(['QUITO']);
+    expect($tree['Pichincha'])->toBe(['Quito']);
+});
+
+it('offers each canton under the name a customer would recognise', function () {
+    // Arrange
+    app(TerritoryRepository::class)->replaceForCountry('EC', [
+        ['territoryBaseId' => 'EC|:|TUNGURAHUA|:|BANOS_DE_AGUA_SANTA|:|BAÑOS_DE_AGUA_SANTA_(TU)', 'territory1Name' => 'TUNGURAHUA', 'territory2Name' => 'BANOS DE AGUA SANTA', 'territory3Name' => 'BAÑOS DE AGUA SANTA (TU)', 'searchableText' => 'Tungurahua - Banos De Agua Santa - Baños De Agua Santa (TU)'],
+        ['territoryBaseId' => 'EC|:|SANTO_DOMINGO_DE_LOS_TSACHILAS|:|SANTO_DOMINGO|:|ZARACAY', 'territory1Name' => 'SANTO DOMINGO DE LOS TSACHILAS', 'territory2Name' => 'SANTO DOMINGO', 'territory3Name' => 'ZARACAY', 'searchableText' => 'Santo Domingo De Los Tsachilas - Santo Domingo - Zaracay'],
+    ]);
+
+    // Act
+    $tree = app(TerritoryRepository::class)->provinceTree('EC');
+
+    // Assert
+    expect($tree['Tungurahua'])->toBe(['Baños de Agua Santa']);
+
+    expect($tree['Santo Domingo de los Tsáchilas'])->toBe(['Santo Domingo']);
 });
 
 it('lists provinces and their cantons in alphabetical order', function () {
@@ -46,9 +62,9 @@ it('lists provinces and their cantons in alphabetical order', function () {
     $tree = app(TerritoryRepository::class)->provinceTree('EC');
 
     // Assert
-    expect(array_keys($tree))->toBe(['AZUAY', 'PICHINCHA']);
+    expect(array_keys($tree))->toBe(['Azuay', 'Pichincha']);
 
-    expect($tree['PICHINCHA'])->toBe(['QUITO', 'RUMINAHUI']);
+    expect($tree['Pichincha'])->toBe(['Quito', 'Ruminahui']);
 });
 
 it('accepts an address without a postal code, and pins the country to Ecuador', function () {
