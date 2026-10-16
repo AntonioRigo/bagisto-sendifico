@@ -203,13 +203,15 @@ class RateQuoter
     }
 
     /**
-     * The drafts on file, by slot.
+     * The drafts on file, by slot. They are read straight from the
+     * configuration table: the drafts belong to the account, not to a channel
+     * or a locale.
      *
      * @return array<int, int>
      */
     protected function shipmentIds(): array
     {
-        $stored = json_decode((string) core()->getConfigData(self::SHIPMENT_KEY), true);
+        $stored = json_decode((string) CoreConfig::where('code', self::SHIPMENT_KEY)->value('value'), true);
 
         return is_array($stored) ? $stored : [];
     }
@@ -228,11 +230,9 @@ class RateQuoter
         }
 
         CoreConfig::updateOrCreate(
-            ['code' => self::SHIPMENT_KEY, 'channel_code' => null, 'locale_code' => null],
-            ['value' => json_encode($ids)]
+            ['code' => self::SHIPMENT_KEY],
+            ['value' => json_encode($ids), 'channel_code' => null, 'locale_code' => null]
         );
-
-        Cache::forget('core_config');
     }
 
     /**
