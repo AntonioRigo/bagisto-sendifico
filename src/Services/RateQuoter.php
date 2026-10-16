@@ -25,9 +25,13 @@ class RateQuoter
     public const POOL_SIZE = 3;
 
     /**
-     * How long one destination and parcel combination keeps its answer.
+     * How long one destination and parcel combination keeps its answer, and
+     * the longest it may ever be kept: a courier's price should never be
+     * quoted from yesterday.
      */
-    public const DEFAULT_CACHE_HOURS = 12;
+    public const DEFAULT_CACHE_HOURS = 6;
+
+    public const MAX_CACHE_HOURS = 12;
 
     /**
      * The smallest parcel the couriers price.
@@ -78,7 +82,10 @@ class RateQuoter
 
         $key = 'sendifico.rates.'.md5($territory.'|'.$weight.'|'.implode('x', $box));
 
-        $hours = (int) (core()->getConfigData('sales.carriers.sendifico.quote_cache_hours') ?: self::DEFAULT_CACHE_HOURS);
+        $hours = min(
+            max((int) (core()->getConfigData('sales.carriers.sendifico.quote_cache_hours') ?: self::DEFAULT_CACHE_HOURS), 1),
+            self::MAX_CACHE_HOURS
+        );
 
         $rates = Cache::get($key);
 
@@ -89,7 +96,7 @@ class RateQuoter
         $rates = $this->withOwnDraft(fn (int $slot) => $this->fetch($slot, $territory, $weight, $box));
 
         if ($rates !== null) {
-            Cache::put($key, $rates, now()->addHours(max($hours, 1)));
+            Cache::put($key, $rates, now()->addHours($hours));
         }
 
         return $rates;

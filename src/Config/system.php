@@ -138,7 +138,7 @@ return [
                 'info' => 'sendifico::app.admin.config.quote-cache-info',
                 'type' => 'text',
                 'depends' => 'live_rates:1',
-                'validation' => 'numeric|min:1|max:168',
+                'validation' => 'numeric|min:1|max:12',
                 'channel_based' => true,
                 'locale_based' => false,
             ], [
