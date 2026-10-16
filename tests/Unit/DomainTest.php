@@ -19,6 +19,19 @@ function territories(): array
         ['EC|:|AZUAY|:|CUENCA|:|CUENCA', 'AZUAY', 'CUENCA', 'CUENCA', 'Azuay - Cuenca - Cuenca'],
         ['EC|:|BOLIVAR|:|SAN MIGUEL|:|SAN MIGUEL', 'BOLIVAR', 'SAN MIGUEL', 'SAN MIGUEL', 'Bolívar - San Miguel - San Miguel'],
         ['EC|:|MANABI|:|SAN MIGUEL|:|SAN MIGUEL', 'MANABI', 'SAN MIGUEL', 'SAN MIGUEL', 'Manabí - San Miguel - San Miguel'],
+        ['EC|:|TUNGURAHUA|:|BANOS_DE_AGUA_SANTA|:|BAÑOS_DE_AGUA_SANTA_(TU)', 'TUNGURAHUA', 'BANOS DE AGUA SANTA', 'BAÑOS DE AGUA SANTA (TU)', 'Tungurahua - Banos De Agua Santa - Baños De Agua Santa (TU)'],
+        ['EC|:|TUNGURAHUA|:|BANOS_DE_AGUA_SANTA|:|LLIGUA', 'TUNGURAHUA', 'BANOS DE AGUA SANTA', 'LLIGUA', 'Tungurahua - Banos De Agua Santa - Lligua'],
+        ['EC|:|TUNGURAHUA|:|SANTIAGO_DE_PILLARO|:|PILLARO', 'TUNGURAHUA', 'SANTIAGO DE PILLARO', 'PILLARO', 'Tungurahua - Santiago De Pillaro - Pillaro'],
+        ['EC|:|TUNGURAHUA|:|SANTIAGO_DE_PILLARO|:|SAN_MIGUELITO', 'TUNGURAHUA', 'SANTIAGO DE PILLARO', 'SAN MIGUELITO', 'Tungurahua - Santiago De Pillaro - San Miguelito'],
+        ['EC|:|AZUAY|:|SIG_SIG|:|SIGSIG', 'AZUAY', 'SIG SIG', 'SIGSIG', 'Azuay - Sig Sig - Sigsig'],
+        ['EC|:|AZUAY|:|SIG_SIG|:|SAN_BARTOLOME', 'AZUAY', 'SIG SIG', 'SAN BARTOLOME', 'Azuay - Sig Sig - San Bartolome'],
+        ['EC|:|SUCUMBIOS|:|LAGO_AGRIO|:|NUEVA_LOJA_(LAGO_AGRIO)', 'SUCUMBIOS', 'LAGO AGRIO', 'NUEVA LOJA (LAGO AGRIO)', 'Sucumbios - Lago Agrio - Nueva Loja (Lago Agrio)'],
+        ['EC|:|SUCUMBIOS|:|LAGO_AGRIO|:|DURENO', 'SUCUMBIOS', 'LAGO AGRIO', 'DURENO', 'Sucumbios - Lago Agrio - Dureno'],
+        ['EC|:|PICHINCHA|:|RUMINAHUI|:|SANGOLQUI', 'PICHINCHA', 'RUMINAHUI', 'SANGOLQUI', 'Pichincha - Ruminahui - Sangolqui'],
+        ['EC|:|PICHINCHA|:|RUMINAHUI|:|COTOGCHOA', 'PICHINCHA', 'RUMINAHUI', 'COTOGCHOA', 'Pichincha - Ruminahui - Cotogchoa'],
+        ['EC|:|NAPO|:|TENA|:|AHUANO', 'NAPO', 'TENA', 'AHUANO', 'Napo - Tena - Ahuano'],
+        ['EC|:|NAPO|:|TENA|:|PANO', 'NAPO', 'TENA', 'PANO', 'Napo - Tena - Pano'],
+        ['EC|:|NAPO|:|EL_TENA|:|EL_TENA', 'NAPO', 'EL TENA', 'EL TENA', 'Napo - El Tena - El Tena'],
     ];
 
     return array_map(fn ($row) => (object) [
@@ -60,6 +73,36 @@ it('never guesses between colliding canton names without a province', function (
 
     expect(TerritoryMatcher::match(territories(), 'Manabí', 'San Miguel'))
         ->toBe('EC|:|MANABI|:|SAN MIGUEL|:|SAN MIGUEL');
+});
+
+it('reads past the province the catalog appends to a parish name', function () {
+    // Act & Assert
+    expect(TerritoryMatcher::match(territories(), 'Tungurahua', 'Baños de Agua Santa'))
+        ->toBe('EC|:|TUNGURAHUA|:|BANOS_DE_AGUA_SANTA|:|BAÑOS_DE_AGUA_SANTA_(TU)');
+});
+
+it('takes the seat whose name the canton carries, however it is spaced', function () {
+    // Act & Assert
+    expect(TerritoryMatcher::match(territories(), 'Tungurahua', 'Santiago de Pillaro'))
+        ->toBe('EC|:|TUNGURAHUA|:|SANTIAGO_DE_PILLARO|:|PILLARO');
+
+    expect(TerritoryMatcher::match(territories(), 'Azuay', 'Sig Sig'))
+        ->toBe('EC|:|AZUAY|:|SIG_SIG|:|SIGSIG');
+});
+
+it('takes the seat the catalog files under its familiar name', function () {
+    // Act & Assert
+    expect(TerritoryMatcher::match(territories(), 'Sucumbios', 'Lago Agrio'))
+        ->toBe('EC|:|SUCUMBIOS|:|LAGO_AGRIO|:|NUEVA_LOJA_(LAGO_AGRIO)');
+});
+
+it('knows the seats that share no name with their canton', function () {
+    // Act & Assert
+    expect(TerritoryMatcher::match(territories(), 'Pichincha', 'Rumiñahui'))
+        ->toBe('EC|:|PICHINCHA|:|RUMINAHUI|:|SANGOLQUI');
+
+    expect(TerritoryMatcher::match(territories(), 'Napo', 'Tena'))
+        ->toBe('EC|:|NAPO|:|EL_TENA|:|EL_TENA');
 });
 
 it('tolerates accents and small typos only above the confidence bar', function () {
