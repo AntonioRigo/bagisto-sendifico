@@ -34,6 +34,13 @@ class RateQuoter
     public const MAX_CACHE_HOURS = 12;
 
     /**
+     * How long an answer of "nobody serves this address" is trusted. It is
+     * kept briefly, since that answer often means the couriers were simply
+     * having a bad moment.
+     */
+    public const EMPTY_CACHE_MINUTES = 15;
+
+    /**
      * The smallest parcel the couriers price.
      */
     public const MINIMUM_WEIGHT = 0.5;
@@ -96,7 +103,7 @@ class RateQuoter
         $rates = $this->withOwnDraft(fn (int $slot) => $this->fetch($slot, $territory, $weight, $box));
 
         if ($rates !== null) {
-            Cache::put($key, $rates, now()->addHours($hours));
+            Cache::put($key, $rates, empty($rates) ? now()->addMinutes(self::EMPTY_CACHE_MINUTES) : now()->addHours($hours));
         }
 
         return $rates;
