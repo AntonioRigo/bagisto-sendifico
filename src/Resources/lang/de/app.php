@@ -5,6 +5,10 @@ return [
         'sendifico' => 'Sendifico-Sendungen',
     ],
     'shop' => [
+            'estimate-days' => "{1} 1 day|[2,*] :days days",
+            'quote-recipient' => 'Rate quote',
+            'quote-street' => 'Rate quote',
+
         'canton' => 'Kanton',
         'invalid-vat-id' => 'Geben Sie eine gültige Cédula (10 Ziffern) oder einen RUC (13 Ziffern) ein.',
         'province' => 'Provinz',
@@ -19,6 +23,13 @@ return [
         ],
 
         'config' => [
+            'live-rates' => 'Quote couriers live',
+            'live-rates-info' => 'Ask Sendifico what each courier charges for the cart and let the customer choose one. Falls back to the rate above when a quote cannot be obtained.',
+            'parcel-boxes' => 'Parcel sizes',
+            'parcel-boxes-info' => 'One bracket per line, as "max kilos: length x width x height" in centimetres, for example "5: 35x30x20".',
+            'quote-cache' => 'Keep a quote for (hours)',
+            'quote-cache-info' => 'How long the same destination and parcel reuse their answer before asking again.',
+
             'quote-pool' => "Quoting drafts",
             'quote-pool-info' => "How many drafts are kept for quoting, so shoppers asking at the same moment do not wait on each other. Three is plenty.",
 
