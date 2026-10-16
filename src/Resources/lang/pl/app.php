@@ -19,6 +19,9 @@ return [
         ],
 
         'config' => [
+            'quote-pool' => "Quoting drafts",
+            'quote-pool-info' => "How many drafts are kept for quoting, so shoppers asking at the same moment do not wait on each other. Three is plenty.",
+
             'handling-fee' => "Handling fee per order",
             'handling-fee-info' => "Added once to every shipping choice, on top of the courier price. Carts holding only free-shipping products pay nothing.",
             'handling-fee-item' => "Handling fee per item",

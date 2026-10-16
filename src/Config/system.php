@@ -124,6 +124,15 @@ return [
                 'channel_based' => true,
                 'locale_based' => false,
             ], [
+                'name' => 'quote_pool',
+                'title' => 'sendifico::app.admin.config.quote-pool',
+                'info' => 'sendifico::app.admin.config.quote-pool-info',
+                'type' => 'text',
+                'depends' => 'live_rates:1',
+                'validation' => 'numeric|min:1|max:10',
+                'channel_based' => true,
+                'locale_based' => false,
+            ], [
                 'name' => 'quote_cache_hours',
                 'title' => 'sendifico::app.admin.config.quote-cache',
                 'info' => 'sendifico::app.admin.config.quote-cache-info',

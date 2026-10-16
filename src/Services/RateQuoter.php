@@ -16,7 +16,13 @@ class RateQuoter
      * in the configuration rather than the cache, so clearing caches or
      * deploying does not strand the draft at Sendifico.
      */
-    public const SHIPMENT_KEY = 'sales.carriers.sendifico.quote_shipment_id';
+    public const SHIPMENT_KEY = 'sales.carriers.sendifico.quote_shipment_ids';
+
+    /**
+     * How many quoting drafts may be kept, so shoppers quoting at the same
+     * moment do not overwrite each other's parcel.
+     */
+    public const POOL_SIZE = 3;
 
     /**
      * How long one destination and parcel combination keeps its answer.
@@ -80,7 +86,7 @@ class RateQuoter
             return $rates;
         }
 
-        $rates = Cache::lock('sendifico.quote.lock', 30)->block(20, fn () => $this->fetch($territory, $weight, $box));
+        $rates = $this->withOwnDraft(fn (int $slot) => $this->fetch($slot, $territory, $weight, $box));
 
         if ($rates !== null) {
             Cache::put($key, $rates, now()->addHours(max($hours, 1)));
@@ -90,12 +96,14 @@ class RateQuoter
     }
 
     /**
-     * Ask Sendifico, reusing the quoting draft when there is one.
+     * Ask Sendifico on the given slot, reusing its draft when there is one.
+     * A draft that has been removed at their end answers with an error, so
+     * the slot forgets it and opens a fresh one.
      *
      * @param  array<int, float>  $box
      * @return array<int, array<string, mixed>>|null
      */
-    protected function fetch(string $territory, float $weight, array $box): ?array
+    protected function fetch(int $slot, string $territory, float $weight, array $box): ?array
     {
         $parcel = [
             'weight' => $weight,
@@ -104,7 +112,7 @@ class RateQuoter
             'height' => $box[2],
         ];
 
-        if ($shipmentId = $this->shipmentId()) {
+        if ($shipmentId = $this->shipmentId($slot)) {
             $response = $this->call(fn () => $this->client->editShipment($shipmentId, [
                 'recipientAddress' => $this->recipient($territory),
                 'parcel' => $parcel,
@@ -114,7 +122,7 @@ class RateQuoter
                 return $this->ratesFrom($response);
             }
 
-            $this->rememberShipment(null);
+            $this->rememberShipment($slot, null);
         }
 
         $response = $this->call(fn () => $this->client->createShipment($this->draft($territory, $parcel)));
@@ -123,7 +131,7 @@ class RateQuoter
             return null;
         }
 
-        $this->rememberShipment($response->json('payload.shipmentId'));
+        $this->rememberShipment($slot, $response->json('payload.shipmentId'));
 
         return $this->ratesFrom($response);
     }
@@ -153,23 +161,68 @@ class RateQuoter
     }
 
     /**
-     * The draft every quote is asked against, if one is still on file.
+     * Run the quote holding one draft of the pool to itself. A shopper only
+     * waits when every draft is busy.
+     *
+     * @return array<int, array<string, mixed>>|null
      */
-    protected function shipmentId(): ?int
+    protected function withOwnDraft(callable $quote): ?array
     {
-        $id = core()->getConfigData(self::SHIPMENT_KEY);
+        $slots = range(0, max((int) (core()->getConfigData('sales.carriers.sendifico.quote_pool') ?: self::POOL_SIZE), 1) - 1);
 
-        return $id ? (int) $id : null;
+        foreach ($slots as $slot) {
+            $lock = Cache::lock('sendifico.quote.slot.'.$slot, 40);
+
+            if ($lock->get()) {
+                try {
+                    return $quote($slot);
+                } finally {
+                    $lock->release();
+                }
+            }
+        }
+
+        $slot = $slots[array_rand($slots)];
+
+        return Cache::lock('sendifico.quote.slot.'.$slot, 40)->block(20, fn () => $quote($slot));
     }
 
     /**
-     * Remember, or forget, the draft quotes are asked against.
+     * The draft a given slot quotes against, if one is still on file.
      */
-    protected function rememberShipment(?int $shipmentId): void
+    protected function shipmentId(int $slot): ?int
     {
+        return $this->shipmentIds()[$slot] ?? null;
+    }
+
+    /**
+     * The drafts on file, by slot.
+     *
+     * @return array<int, int>
+     */
+    protected function shipmentIds(): array
+    {
+        $stored = json_decode((string) core()->getConfigData(self::SHIPMENT_KEY), true);
+
+        return is_array($stored) ? $stored : [];
+    }
+
+    /**
+     * Remember, or forget, the draft a slot quotes against.
+     */
+    protected function rememberShipment(int $slot, ?int $shipmentId): void
+    {
+        $ids = $this->shipmentIds();
+
+        if ($shipmentId) {
+            $ids[$slot] = (int) $shipmentId;
+        } else {
+            unset($ids[$slot]);
+        }
+
         CoreConfig::updateOrCreate(
             ['code' => self::SHIPMENT_KEY, 'channel_code' => null, 'locale_code' => null],
-            ['value' => $shipmentId]
+            ['value' => json_encode($ids)]
         );
 
         Cache::forget('core_config');

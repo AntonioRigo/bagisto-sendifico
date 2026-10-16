@@ -23,6 +23,9 @@ return [
         ],
 
         'config' => [
+            'quote-pool' => "Borradores de cotización",
+            'quote-pool-info' => "Cuántos borradores se mantienen para cotizar, para que dos clientes que cotizan a la vez no se esperen. Con tres basta.",
+
             'handling-fee' => "Cargo por manejo por pedido",
             'handling-fee-info' => "Se suma una vez a cada opción de envío, sobre el precio del courier. Los carritos que solo llevan productos con envío gratis no pagan nada.",
             'handling-fee-item' => "Cargo por manejo por ítem",
