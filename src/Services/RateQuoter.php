@@ -3,16 +3,20 @@
 namespace Tapstar\Sendifico\Services;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Tapstar\Sendifico\Api\Client;
 use Tapstar\Sendifico\Shipment\CarrierCatalog;
 use Tapstar\Sendifico\Shipment\PayloadBuilder;
+use Webkul\Core\Models\CoreConfig;
 
 class RateQuoter
 {
     /**
-     * Where the identifier of the reusable quoting shipment is kept.
+     * Where the identifier of the reusable quoting shipment is kept. It lives
+     * in the configuration rather than the cache, so clearing caches or
+     * deploying does not strand the draft at Sendifico.
      */
-    public const SHIPMENT_KEY = 'sendifico.quote.shipment';
+    public const SHIPMENT_KEY = 'sales.carriers.sendifico.quote_shipment_id';
 
     /**
      * How long one destination and parcel combination keeps its answer.
@@ -100,34 +104,75 @@ class RateQuoter
             'height' => $box[2],
         ];
 
-        $shipmentId = Cache::get(self::SHIPMENT_KEY);
+        if ($shipmentId = $this->shipmentId()) {
+            $response = $this->call(fn () => $this->client->editShipment($shipmentId, [
+                'recipientAddress' => $this->recipient($territory),
+                'parcel' => $parcel,
+            ]));
 
+            if ($response?->successful()) {
+                return $this->ratesFrom($response);
+            }
+
+            $this->rememberShipment(null);
+        }
+
+        $response = $this->call(fn () => $this->client->createShipment($this->draft($territory, $parcel)));
+
+        if (! $response?->successful()) {
+            return null;
+        }
+
+        $this->rememberShipment($response->json('payload.shipmentId'));
+
+        return $this->ratesFrom($response);
+    }
+
+    /**
+     * Run one API call, reporting transport failures as no answer at all.
+     */
+    protected function call(callable $request): ?\Illuminate\Http\Client\Response
+    {
         try {
-            $response = $shipmentId
-                ? $this->client->editShipment($shipmentId, [
-                    'recipientAddress' => $this->recipient($territory),
-                    'parcel' => $parcel,
-                ])
-                : $this->client->createShipment($this->draft($territory, $parcel));
+            return $request();
         } catch (\Exception $e) {
             report($e);
 
             return null;
         }
+    }
 
-        if (! $response->successful()) {
-            Cache::forget(self::SHIPMENT_KEY);
+    /**
+     * The rates carried by a quoting response.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    protected function ratesFrom(\Illuminate\Http\Client\Response $response): array
+    {
+        return $this->normalize($response->json('payload.rates') ?? []);
+    }
 
-            return null;
-        }
+    /**
+     * The draft every quote is asked against, if one is still on file.
+     */
+    protected function shipmentId(): ?int
+    {
+        $id = core()->getConfigData(self::SHIPMENT_KEY);
 
-        $payload = $response->json('payload') ?? [];
+        return $id ? (int) $id : null;
+    }
 
-        if ($id = $payload['shipmentId'] ?? null) {
-            Cache::forever(self::SHIPMENT_KEY, $id);
-        }
+    /**
+     * Remember, or forget, the draft quotes are asked against.
+     */
+    protected function rememberShipment(?int $shipmentId): void
+    {
+        CoreConfig::updateOrCreate(
+            ['code' => self::SHIPMENT_KEY, 'channel_code' => null, 'locale_code' => null],
+            ['value' => $shipmentId]
+        );
 
-        return $this->normalize($payload['rates'] ?? []);
+        Cache::forget('core_config');
     }
 
     /**
@@ -139,7 +184,7 @@ class RateQuoter
     protected function draft(string $territory, array $parcel): array
     {
         return [
-            'extId' => 'bagisto-quote-'.substr(md5((string) config('app.url')), 0, 8),
+            'extId' => 'bagisto-quote-'.substr(md5((string) config('app.url')), 0, 8).'-'.Str::random(6),
             'integration' => [
                 'platform' => PayloadBuilder::PLATFORM,
                 'url' => rtrim((string) config('app.url'), '/'),
