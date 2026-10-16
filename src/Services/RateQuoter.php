@@ -41,9 +41,10 @@ class RateQuoter
     public const EMPTY_CACHE_MINUTES = 15;
 
     /**
-     * The smallest parcel the couriers price.
+     * The smallest parcel the couriers price. Anything lighter is refused
+     * outright, so a cart of featherweights still quotes as one kilo.
      */
-    public const MINIMUM_WEIGHT = 0.5;
+    public const MINIMUM_WEIGHT = 1.0;
 
     public function __construct(
         protected Client $client,
